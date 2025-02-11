@@ -1,0 +1,15 @@
+Experimental data: Simple Axial Extension. First line -> stretching ratio; Second line -> stress.
+1 1.196 1.8098 2.0605 2.6657 3.0288 3.513 4.9395 5.8386 6.4352 6.8501 7.3775 7.7233 8.0432 8.2507 8.4841
+0 0.494672755 1.073059361 1.073059361 1.742770167 1.95585997 2.656012177 5.273972603 7.465753425 9.748858447 12.18417047 15.53272451 19.24657534 22.99086758 25.88280061 28.98782344
+Experimental data: Equi-Biaxial Loading. First line -> stretching ratio; Second line -> stress.
+1 1.368876081 2.198847262 2.639769452 3.141210375 3.608069164 4.204610951 4.576368876 5.121037464 5.328530259 5.561959654
+0 1.073059361 1.95585997 2.625570776 3.96499239 5.517503805 8.95738204 12.15372907 16.87214612 21.68188737 26.49162861
+Experimental data: Simple Shear. First line -> Shear Parameter (gamma); Second line -> Stress (S12).
+n
+n
+Experimental data: Simple Shear. First line -> stretching ratio; Second line -> Stress (S12).
+n
+n
+Stress Measure.
+Nominal
+Information about the experimental data source:

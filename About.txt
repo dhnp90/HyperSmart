@@ -1,0 +1,7 @@
+About HyperSmart Software
+
+The HyperSmart Software is part of a post-doctoral project developed by Dr. Daniel Henrique Nunes Peixoto at the Graduate Program in Structural Engineering, School of Engineering, University of Sao Paulo (SET/EESC/USP). The project is supervised by Prof. Dr. Edson Denner Leonel and includes the collaboration of Prof. Marcelo Greco. It is funded by the Conselho Nacional de Desenvolvimento Cientifico e Tecnologico (CNPq).
+
+The goal of this project is to provide scientists from various fields, including mechanical, civil, and biomedical engineering, with a robust tool to calibrate and select the most appropriate model to mechanically describe the behavior of hyperelastic materials. This effort addresses the challenge posed by the growing number of hyperelastic models in scientific literature, which makes choosing the most suitable model increasingly difficult.
+
+The project aims to establish a comprehensive library of the most important hyperelastic models, with the added functionality for users to incorporate custom models as needed. Additionally, it seeks to create a repository of experimental data for rubber-like materials, biomaterials, and soft biological tissues, enabling users to validate and refine their models using reliable data.
