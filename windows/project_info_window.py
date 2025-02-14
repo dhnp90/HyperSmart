@@ -26,18 +26,6 @@ class ProjectInfoWindow:
         stress_measure_combobox.place(x=50, y=320, width=400)
         stress_measure_combobox.current(0)  # Set the default value
 
-        # Proceed button to submit the project name
+        # Next button to submit the material name
         next_button = tk.Button(self.root, text="Next", command=lambda: self.proceed_with_project_name(proceed_callback))
         next_button.place(x=450, y=665)
-
-    def proceed_with_project_name(self, proceed_callback):
-        material_name = self.material_name_entry.get()
-        stress_measure = self.stress_measure_var.get()
-        self.open_experimental_data_input(material_name, stress_measure)
-
-    def open_experimental_data_input(self, material_name, stress_measure):
-        experimental_data_window = tk.Toplevel(self.root)
-        ExperimentalDataInputWindow(experimental_data_window, material_name, stress_measure)
-
-    def proceed_with_project_name(self, proceed_callback):
-        project_name = self.project_name_entry.get()
