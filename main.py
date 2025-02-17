@@ -11,7 +11,7 @@ class HyperSmartApp:
     def __init__(self, root):
         self.root = root
         self.root.title("HyperSmart Software")
-        self.root.geometry("500x700")
+        self.center_window(500, 700)
         self.root.configure(bg='white')
 
         # Load and set the window icon
@@ -24,17 +24,20 @@ class HyperSmartApp:
         # Initialize the first window
         self.open_main_window()
 
+    def center_window(self, width, height):
+        screen_width = self.root.winfo_screenwidth()
+        screen_height = self.root.winfo_screenheight()
+        center_x = int(screen_width / 2 - width / 2)
+        center_y = int(screen_height / 2 - height / 2)
+        self.root.geometry(f'{width}x{height}+{center_x}+{center_y}')
+
     def open_main_window(self):
         self.clear_window()
 
-        # Display the CNPq logo image
-        ImageDisplay (self.root, "logo_cnpq.png", (50, 50), x=30, y=20)
-
-        # Display the EESC logo image
-        ImageDisplay (self.root, "eesc_logomarca1.png", (100, 50), x=380, y=20)
-
-        # Display the main logo image
-        ImageDisplay(self.root, "Logo_HyperSmart.png", (300,300), x=100, y=280)
+        # Images
+        ImageDisplay (self.root, "logo_cnpq.png", (50, 50), x=30, y=20)             # Display the CNPq logo image    
+        ImageDisplay (self.root, "eesc_logomarca1.png", (100, 50), x=380, y=20)     # Display the EESC logo image
+        ImageDisplay(self.root, "Logo_HyperSmart.png", (300,300), x=100, y=280)     # Display the main logo image
 
         # Add the "Start New Calibration" button
         start_button = tk.Button(self.root, text="Start New Calibration", command=self.open_project_info)
@@ -51,10 +54,9 @@ class HyperSmartApp:
         self.clear_window()
         ProjectInfoWindow(self.root, self.open_experimental_data_input)
 
-    def open_experimental_data_input(self, selected_stress):
-        print(f'Selected Stress: {selected_stress}')
+    def open_experimental_data_input(self, material):
         self.clear_window()
-        ExperimentalDataInputWindow(self.root)
+        ExperimentalDataInputWindow(self.root, material)
         
     def clear_window(self):
         for widget in self.root.winfo_children():

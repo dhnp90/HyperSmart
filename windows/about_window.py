@@ -7,10 +7,17 @@ class AboutWindow:
         self.root = root
         self.create_window()
 
+    def center_window(self, window, width, height):
+        screen_width = window.winfo_screenwidth()
+        screen_height = window.winfo_screenheight()
+        center_x = int(screen_width / 2 - width / 2)
+        center_y = int(screen_height / 2 - height / 2)
+        window.geometry(f'{width}x{height}+{center_x}+{center_y}')
+
     def create_window(self):
         about_window = tk.Toplevel(self.root)
         about_window.title("About HyperSmart")
-        about_window.geometry("400x520")
+        self.center_window(about_window, 400, 520)
         about_window.configure(bg='white')
 
         # Initial Information
@@ -22,5 +29,5 @@ class AboutWindow:
         file_path = 'About.txt'
         with open(file_path, 'r') as file:
             about_text = file.read()
-        about_label = tk.Label(about_window, text=about_text, bg='white',justify=tk.LEFT, wraplength=380)
+        about_label = tk.Label(about_window, text=about_text, bg='white', justify=tk.LEFT, wraplength=380)
         about_label.pack(pady=20)
