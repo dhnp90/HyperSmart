@@ -17,7 +17,7 @@ class ExperimentalDataInputWindow:
             label.place(x=20, y=300 + i * 50, width=250, height=25)
 
         # Display the "Add data" buttons
-        add_data_button1 = tk.Button(self.root, text="Add Data", command=self.add_uniaxial)
+        add_data_button1 = tk.Button(self.root, text="Add Data")
         add_data_button1.place(x=280, y=300 , width=100, height=25)
 
         add_data_button2 = tk.Button(self.root, text="Add Data")

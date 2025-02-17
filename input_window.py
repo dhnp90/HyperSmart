@@ -21,10 +21,7 @@ def convert_to_vectors():
         input_values2 = [float(x) for x in input_text2.split()]
         # Create a NumPy array from the input values
         vector2 = np.array(input_values2)
-        
-        # Display the NumPy arrays in the result labels
-        result_label1.config(text=f"NumPy Vector 1: {vector1}")
-        result_label2.config(text=f"NumPy Vector 2: {vector2}")
+
     except ValueError:
         messagebox.showerror("Input Error", "Please enter valid numbers separated by spaces.")
 
@@ -34,18 +31,33 @@ def main():
     # Create the main window
     root = tk.Tk()
     root.title("Excel to NumPy Vectors")
-    root.geometry("600x600")  # Increase width for better input space
+    root.geometry("450x600")  # Increase width for better input space
     
     # Create a label with instructions
-    instructions = tk.Label(root, text="Input each value in a new line (two columns):", wraplength=500)
+    instructions = tk.Label(root, text="Data Input \n(Excel Copy/Paste Avaiable)", font=("Helvetica", 10), wraplength=500)
     instructions.pack(pady=10)
+
+    # Create a frame for labels and text widgets
+    frame = tk.Frame(root)
+    frame.pack(pady=10)
+    
+    # Create a sub-frame for column labels
+    label_frame = tk.Frame(frame)
+    label_frame.pack()
+
+    # Add "x" and "y" labels with precise positioning using place()
+    label_x = tk.Label(root, text="x", font=("Arial", 12, "bold"))
+    label_x.place(x=130, y=60)  # Adjust x and y as needed
+
+    label_y = tk.Label(root, text="y", font=("Arial", 12, "bold"))
+    label_y.place(x=285, y=60)  # Adjust x and y as needed
     
     # Create a frame for the text widgets and scrollbars
     frame = tk.Frame(root)
     frame.pack(pady=10)
     
     # Create the first text widget for input with increased height
-    text_widget1 = tk.Text(frame, height=20, width=15)
+    text_widget1 = tk.Text(frame, height=28, width=15)
     text_widget1.pack(side=tk.LEFT, padx=10)
     
     # Add a scrollbar to the first text widget
@@ -54,7 +66,7 @@ def main():
     scrollbar1.pack(side=tk.LEFT, fill=tk.Y)
     
     # Create the second text widget for input with increased height
-    text_widget2 = tk.Text(frame, height=20, width=15)
+    text_widget2 = tk.Text(frame, height=28, width=15)
     text_widget2.pack(side=tk.LEFT, padx=10)
     
     # Add a scrollbar to the second text widget
@@ -63,14 +75,8 @@ def main():
     scrollbar2.pack(side=tk.LEFT, fill=tk.Y)
     
     # Create a button to convert input to NumPy vectors
-    convert_button = tk.Button(root, text="Convert to NumPy Vectors", command=convert_to_vectors)
+    convert_button = tk.Button(root, text="Assign Values", command=convert_to_vectors)
     convert_button.pack(pady=10)
-    
-    # Create labels to display the results
-    result_label1 = tk.Label(root, text="NumPy Vector 1: ")
-    result_label1.pack(pady=10)
-    result_label2 = tk.Label(root, text="NumPy Vector 2: ")
-    result_label2.pack(pady=10)
     
     # Run the main loop
     root.mainloop()
