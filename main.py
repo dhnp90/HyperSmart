@@ -1,7 +1,7 @@
 import tkinter as tk
 from PIL import Image, ImageTk
 import os
-from windows.experimental_data_input import ExperimentalDataInputWindow
+from windows.experimental_data_input import ExperimentalDataWindow
 from windows.project_info_window import ProjectInfoWindow
 from windows.about_window import AboutWindow
 from image_display import ImageDisplay
@@ -56,7 +56,7 @@ class HyperSmartApp:
 
     def open_experimental_data_input(self, material):
         self.clear_window()
-        ExperimentalDataInputWindow(self.root, material)
+        ExperimentalDataWindow(self.root, material)
         
     def clear_window(self):
         for widget in self.root.winfo_children():

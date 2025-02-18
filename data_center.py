@@ -2,7 +2,7 @@
 import numpy as np
 
 class ExperimentalData:
-    def __int__(self):
+    def __init__(self):
         # Initialize a string for the name of the material
         self.material_name = ""
 

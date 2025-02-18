@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from image_display import ImageDisplay
 from data_center import ExperimentalData
-from windows.experimental_data_input import ExperimentalDataInputWindow
+from windows.experimental_data_input import ExperimentalDataWindow
 
 class ProjectInfoWindow:
     def __init__(self, root, proceed_callback):
