@@ -1,0 +1,11 @@
+# Ignore Visual Studio files
+.vs/
+*.suo
+*.vsudx
+*.wsuo
+*.json
+
+# Ignore Python bytecode files
+__pycache__/
+*.pyc
+*.pyo
