@@ -4,8 +4,9 @@ from data_center import ExperimentalData
 from windows.input_window import ExperimentalDataInputWindow
 
 class ExperimentalDataWindow:
-    def __init__(self, root, material):
+    def __init__(self, root, material, proceed_callback):
         self.root = root
+        self.proceed_callback = proceed_callback
         self.material = material
         self.root.title("Experimental Data Input")
         self.root.geometry("500x700")
@@ -28,39 +29,47 @@ class ExperimentalDataWindow:
         labels = ["Uniaxial Tension/Compression", "Equi-Biaxial Loading", "Simple Shear", "Pure Shear"]
         for i, text in enumerate(labels):
             label = tk.Label(self.root, text=text, font=("Helvetica", 10), anchor='w')
-            label.place(x=20, y=300 + i * 50, width=250, height=25)
+            label.place(x=20, y=300 + i * 50, width=325, height=25)
 
         # Add Data buttons and status labels
         self.add_data_button1 = tk.Button(self.root, text="Add Data", 
                                           command=lambda: self.open_data_input_window(("sae_stretch", "sae_stress")))
-        self.add_data_button1.place(x=280, y=300, width=100, height=25)
+        self.add_data_button1.place(x=355, y=300, width=100, height=25)
         self.status_label1 = tk.Label(self.root, text="❌", fg="red", font=("Helvetica", 12))
-        self.status_label1.place(x=390, y=300, width=20, height=25)
+        self.status_label1.place(x=465, y=300, width=20, height=25)
         self.buttons["sae_stretch"] = self.add_data_button1
 
         self.add_data_button2 = tk.Button(self.root, text="Add Data", 
                                           command=lambda: self.open_data_input_window(("ebl_stretch", "ebl_stress")))
-        self.add_data_button2.place(x=280, y=350, width=100, height=25)
+        self.add_data_button2.place(x=355, y=350, width=100, height=25)
         self.status_label2 = tk.Label(self.root, text="❌", fg="red", font=("Helvetica", 12))
-        self.status_label2.place(x=390, y=350, width=20, height=25)
+        self.status_label2.place(x=465, y=350, width=20, height=25)
         self.buttons["ebl_stretch"] = self.add_data_button2
 
         self.add_data_button3 = tk.Button(self.root, text="Add Data", 
                                           command=lambda: self.open_data_input_window(("ss_shear_parameter", "ss_stress")))
-        self.add_data_button3.place(x=280, y=400, width=100, height=25)
+        self.add_data_button3.place(x=355, y=400, width=100, height=25)
         self.status_label3 = tk.Label(self.root, text="❌", fg="red", font=("Helvetica", 12))
-        self.status_label3.place(x=390, y=400, width=20, height=25)
+        self.status_label3.place(x=465, y=400, width=20, height=25)
         self.buttons["ss_shear_parameter"] = self.add_data_button3
 
         self.add_data_button4 = tk.Button(self.root, text="Add Data", 
                                           command=lambda: self.open_data_input_window(("ps_shear_parameter", "ps_stress")))
-        self.add_data_button4.place(x=280, y=450, width=100, height=25)
+        self.add_data_button4.place(x=355, y=450, width=100, height=25)
         self.status_label4 = tk.Label(self.root, text="❌", fg="red", font=("Helvetica", 12))
-        self.status_label4.place(x=390, y=450, width=20, height=25)
+        self.status_label4.place(x=465, y=450, width=20, height=25)
         self.buttons["ps_shear_parameter"] = self.add_data_button4
 
         # Update status labels initially
         self.update_status_labels()
+
+        # Add "Done" button
+        done_button = tk.Button(self.root, text="Done!", command=lambda: self.proceed(material))
+        done_button.place(x=445, y=665)
+
+    def proceed(self, material):
+        # Call the proceed callback to open the next window
+        self.proceed_callback(material)
 
     def open_data_input_window(self, vector_names):
         """Opens the ExperimentalDataInputWindow and passes the material object along with vector names."""

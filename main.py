@@ -6,6 +6,7 @@ from windows.project_info_window import ProjectInfoWindow
 from windows.about_window import AboutWindow
 from image_display import ImageDisplay
 from data_center import ExperimentalData
+from windows.graph_display_of_data import DataInputVisualisation
 
 class HyperSmartApp:
     def __init__(self, root):
@@ -56,7 +57,11 @@ class HyperSmartApp:
 
     def open_experimental_data_input(self, material):
         self.clear_window()
-        ExperimentalDataWindow(self.root, material)
+        ExperimentalDataWindow(self.root, material, self.open_graph_display_of_data)
+
+    def open_graph_display_of_data(self, material):
+        self.clear_window()
+        DataInputVisualisation(self.root, material)
         
     def clear_window(self):
         for widget in self.root.winfo_children():
