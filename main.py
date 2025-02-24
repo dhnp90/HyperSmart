@@ -8,6 +8,8 @@ from image_display import ImageDisplay
 from data_center import ExperimentalData
 from windows.graph_display_of_data import DataInputVisualisation
 
+
+
 class HyperSmartApp:
     def __init__(self, root):
         self.root = root
