@@ -1,4 +1,4 @@
-# graph_display_of_data.py
+﻿# graph_display_of_data.py
 import tkinter as tk
 import numpy as np
 import matplotlib.pyplot as plt
@@ -6,13 +6,16 @@ from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from image_display import ImageDisplay
 from data_center import ExperimentalData
+from windows.experimental_data_input import ExperimentalDataWindow
 
 class DataInputVisualisation:
-    def __init__(self, root, material):
+    def __init__(self, root, material, proceed_callback, go_back_callback):
         self.root = root
         self.material = material
+        self.proceed_callback = proceed_callback
+        self.go_back = go_back_callback
         self.root.title("Data Input Graphical Visualisation")
-        self.center_window(900, 700)
+        self.center_window(900, 760)
         self.root.configure(bg='white')
 
         # Display the main logo image
@@ -38,8 +41,9 @@ class DataInputVisualisation:
             fig = Figure(figsize=(6, 5), dpi=100, constrained_layout=True)  # Increase size and use constrained_layout
             ax = fig.add_subplot(111)
             ax.plot(sae_stretch, sae_stress, 'o', markerfacecolor='none')
-            ax.set_xlabel('Stretch', labelpad=10)  # Add padding
-            ax.set_ylabel('Stress', labelpad=10)
+            ax.set_xlabel('Stretch (λ₁)', labelpad=10)  # Add padding
+            ax.set_ylabel('Stress (σ₁₁)', labelpad=10)
+            ax.grid(True)
             # Embed plot
             canvas = FigureCanvasTkAgg(fig, master=self.root)
             canvas.draw()
@@ -55,8 +59,9 @@ class DataInputVisualisation:
             fig = Figure(figsize=(6, 5), dpi=100, constrained_layout=True)  # Increase size and use constrained_layout
             ax = fig.add_subplot(111)
             ax.plot(ebl_stretch, ebl_stress, 'o', markerfacecolor='none')
-            ax.set_xlabel('Stretch', labelpad=10)  # Add padding
-            ax.set_ylabel('Stress', labelpad=10)
+            ax.set_xlabel('Stretch (λ₁)', labelpad=10)  # Add padding
+            ax.set_ylabel('Stress (σ₁₁)', labelpad=10)
+            ax.grid(True)
             # Embed plot
             canvas = FigureCanvasTkAgg(fig, master=self.root)
             canvas.draw()
@@ -72,8 +77,9 @@ class DataInputVisualisation:
             fig = Figure(figsize=(6, 5), dpi=100, constrained_layout=True)  # Increase size and use constrained_layout
             ax = fig.add_subplot(111)
             ax.plot(ss_shear_parameter, ss_stress, 'o', markerfacecolor='none')
-            ax.set_xlabel('Shear Parameter', labelpad=10)  # Add padding
-            ax.set_ylabel('Shear Stress', labelpad=10)
+            ax.set_xlabel('Shear Parameter (γ₁₂)', labelpad=10)  # Add padding
+            ax.set_ylabel('Shear Stress (σ₁₂)', labelpad=10)
+            ax.grid(True)
             # Embed plot
             canvas = FigureCanvasTkAgg(fig, master=self.root)
             canvas.draw()
@@ -89,19 +95,35 @@ class DataInputVisualisation:
             fig = Figure(figsize=(6, 5), dpi=100, constrained_layout=True)  # Increase size and use constrained_layout
             ax = fig.add_subplot(111)
             ax.plot(ps_shear_parameter, ps_stress, 'o', markerfacecolor='none')
-            ax.set_xlabel('Shear Parameter', labelpad=10)  # Add padding
-            ax.set_ylabel('Shear Stress', labelpad=10)
+            ax.set_xlabel('Shear Parameter (γ₁₂)', labelpad=10)  # Add padding
+            ax.set_ylabel('Shear Stress (σ₁₂)', labelpad=10)
+            ax.grid(True)
             # Embed plot
             canvas = FigureCanvasTkAgg(fig, master=self.root)
             canvas.draw()
             canvas.get_tk_widget().place(x=480, y=450, width=350, height=250)
 
+        # Add "Confirm" button
+        confirm_button = tk.Button(self.root, text="Confirm Data Input!", command=lambda: self.proceed(material))
+        confirm_button.place(x=770, y=725)
+
+        # Add "Correct/Add Data Input"
+        go_back_button = tk.Button(self.root, text="Correct/Add Data", command=lambda: self.go_back(material))
+        go_back_button.place(x=660, y=725)
+
+    def proceed(self, material):
+        # Call the proceed callback to open the next window
+        self.proceed_callback(material)
+
+    def go_back(self, material):
+        # Call the go_back callback to return to the previous window 
+        self.go_back_callback(material)
 
     def center_window(self, width, height):
         screen_width = self.root.winfo_screenwidth()
         screen_height = self.root.winfo_screenheight()
         center_x = int(screen_width / 2 - width / 2)
-        center_y = int(screen_height / 2 - height / 2)
+        center_y = int(screen_height / 2 - ((height + 80)/ 2))
         self.root.geometry(f'{width}x{height}+{center_x}+{center_y}')
     
     

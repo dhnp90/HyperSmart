@@ -7,12 +7,12 @@ from windows.about_window import AboutWindow
 from image_display import ImageDisplay
 from data_center import ExperimentalData
 from windows.graph_display_of_data import DataInputVisualisation
-
-
+from windows.model_first_window import ModelingChoice
 
 class HyperSmartApp:
     def __init__(self, root):
         self.root = root
+        self.input_status = {"sae_stretch": False, "ebl_stretch": False, "ss_shear_parameter": False, "ps_shear_parameter": False}
         self.root.title("HyperSmart Software")
         self.center_window(500, 700)
         self.root.configure(bg='white')
@@ -59,11 +59,15 @@ class HyperSmartApp:
 
     def open_experimental_data_input(self, material):
         self.clear_window()
-        ExperimentalDataWindow(self.root, material, self.open_graph_display_of_data)
+        ExperimentalDataWindow(self.root, material, self.open_graph_display_of_data, self.input_status)
 
     def open_graph_display_of_data(self, material):
         self.clear_window()
-        DataInputVisualisation(self.root, material)
+        DataInputVisualisation(self.root, material, self.open_model_first_window, self.open_experimental_data_input)
+
+    def open_model_first_window(self, material):
+        self.clear_window()
+        ModelingChoice(self.root, material)
         
     def clear_window(self):
         for widget in self.root.winfo_children():

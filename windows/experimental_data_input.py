@@ -4,20 +4,16 @@ from data_center import ExperimentalData
 from windows.input_window import ExperimentalDataInputWindow
 
 class ExperimentalDataWindow:
-    def __init__(self, root, material, proceed_callback):
+    def __init__(self, root, material, proceed_callback, input_status):
         self.root = root
         self.proceed_callback = proceed_callback
         self.material = material
         self.root.title("Experimental Data Input")
-        self.root.geometry("500x700")
+        self.center_window(500, 700)
+        self.root.configure(bg='white')
 
         # Dictionary to track input status for each data type
-        self.input_status = {
-            "sae_stretch": False,
-            "ebl_stretch": False,
-            "ss_shear_parameter": False,
-            "ps_shear_parameter": False,
-        }
+        self.input_status = input_status
 
         # Dictionary to track buttons
         self.buttons = {}
@@ -114,6 +110,12 @@ class ExperimentalDataWindow:
             self.status_label4.config(text="❌", fg="red")
             self.buttons["ps_shear_parameter"].config(text="Add Data")
 
+    def center_window(self, width, height):
+        screen_width = self.root.winfo_screenwidth()
+        screen_height = self.root.winfo_screenheight()
+        center_x = int(screen_width / 2 - width / 2)
+        center_y = int(screen_height / 2 - height / 2)
+        self.root.geometry(f'{width}x{height}+{center_x}+{center_y}')
 
 #  # Test script
 # if __name__ == "__main__":
