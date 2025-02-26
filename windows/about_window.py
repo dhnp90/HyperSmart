@@ -17,17 +17,49 @@ class AboutWindow:
     def create_window(self):
         about_window = tk.Toplevel(self.root)
         about_window.title("About HyperSmart")
-        self.center_window(about_window, 400, 520)
+        self.center_window(about_window, 450, 500)
         about_window.configure(bg='white')
 
-        # Initial Information
-        initial_info = "HyperSmart Software\nVersion 1.0\n\nDeveloped by: Dr. Daniel Henrique Nunes Peixoto\nEmail: danielh_peixoto@hotmail.com"
-        initial_label = tk.Label(about_window, text=initial_info, bg='white', justify=tk.CENTER, wraplength=380)
+        # Use TkDefaultFont for consistency
+        custom_font = "TkDefaultFont"
+
+        # Initial Information (still using Label)
+        initial_info = (
+            "HyperSmart Software\nVersion 1.0\n\n"
+            "Developed by: Dr. Daniel Henrique Nunes Peixoto\n"
+            "Email: danielh_peixoto@hotmail.com"
+        )
+        initial_label = tk.Label(about_window, text=initial_info, bg='white', 
+                                 justify=tk.CENTER, wraplength=380, font=custom_font)
         initial_label.pack(pady=10)
 
-        # Load text from the .txt file (left-justified)
+        # Frame to hold text and scrollbar
+        frame = tk.Frame(about_window, bg="white")
+        frame.pack(pady=10, padx=10, fill="both")  # No expand=True
+
+        # Create Text widget with fixed size
+        text_widget = tk.Text(frame, wrap="word", height=30, width=68, bg="white", font=custom_font)
+        text_widget.pack(side="left")  # No fill="both", no expand=True
+
+        # Add Scrollbar
+        scrollbar = tk.Scrollbar(frame, orient="vertical", command=text_widget.yview)
+        scrollbar.pack(side="right", fill="y")
+
+        # Link Scrollbar to Text widget
+        text_widget.config(yscrollcommand=scrollbar.set)
+
+
+        # Load text from the .txt file into the Text widget
         file_path = 'About.txt'
-        with open(file_path, 'r') as file:
-            about_text = file.read()
-        about_label = tk.Label(about_window, text=about_text, bg='white', justify=tk.LEFT, wraplength=380)
-        about_label.pack(pady=20)
+        try:
+            with open(file_path, 'r', encoding="utf-8") as file:
+                about_text = file.read()
+                text_widget.insert("1.0", about_text)  # Insert text into Text widget
+        except Exception as e:
+            text_widget.insert("1.0", f"Error loading file: {e}")
+
+        # Disable editing
+        text_widget.config(state="disabled")
+
+
+

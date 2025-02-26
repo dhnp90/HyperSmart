@@ -5,3 +5,15 @@ The HyperSmart Software is part of a post-doctoral project developed by Dr. Dani
 The goal of this project is to provide scientists from various fields, including mechanical, civil, and biomedical engineering, with a robust tool to calibrate and select the most appropriate model to mechanically describe the behavior of hyperelastic materials. This effort addresses the challenge posed by the growing number of hyperelastic models in scientific literature, which makes choosing the most suitable model increasingly difficult.
 
 The project aims to establish a comprehensive library of the most important hyperelastic models, with the added functionality for users to incorporate custom models as needed. Additionally, it seeks to create a repository of experimental data for rubber-like materials, biomaterials, and soft biological tissues, enabling users to validate and refine their models using reliable data.
+
+
+Contributions:
+
+Dr. D. H. N. Peixoto (USP)	
+Conceptualization, Software Implementation, Research Execution
+
+Prof. Dr. E. D. Leonel (USP) 	
+Conceptualization, Research Supervision
+
+Prof. Dr. M. Greco (UFMG)
+Conceptualization, Research Collaboration
