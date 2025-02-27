@@ -1,13 +1,14 @@
 # model_first_window.py
-
 import tkinter as tk
 from image_display import ImageDisplay
 
 class ModelingChoice:
-    def __init__(self, root, material):
+    def __init__(self, root, material, proceed_callbak):
         self.root = root
         self.material = material
-        self.root.title = "Defining Hyperelastic Model"
+        self.proceed_callback = proceed_callbak
+
+        self.root.title("Defining Hyperelastic Model")
         self.center_window(500, 700)
         self.root.configure(bg='white')
 
@@ -19,8 +20,12 @@ class ModelingChoice:
         help_choose_model_button.place(x=54, y=300)
 
         # Create button to ask for help calibrating hyperelastic model already chosen
-        help_calibration_button = tk.Button(self.root, text='I already chose the most appropriate hyperelastic model;\n Help me calibrate its material parameters', width=55, height=2, justify="center")
+        help_calibration_button = tk.Button(self.root, text='I already chose the most appropriate hyperelastic model;\n Help me calibrate its material parameters', width=55, height=2, justify="center",command=self.open_options_window)
         help_calibration_button.place(x=54, y=360)
+
+    def open_options_window(self):
+        """Call the callback function to open OptionsOfModels window."""
+        self.proceed_callback(self.material)
 
     def center_window(self, width, height):
         screen_width = self.root.winfo_screenwidth()

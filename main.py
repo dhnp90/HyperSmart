@@ -8,6 +8,7 @@ from image_display import ImageDisplay
 from data_center import ExperimentalData
 from windows.graph_display_of_data import DataInputVisualisation
 from windows.model_first_window import ModelingChoice
+from windows.model_options_window import OptionsOfModels
 
 class HyperSmartApp:
     def __init__(self, root):
@@ -67,7 +68,11 @@ class HyperSmartApp:
 
     def open_model_first_window(self, material):
         self.clear_window()
-        ModelingChoice(self.root, material)
+        ModelingChoice(self.root, material, self.open_model_options_window)
+    
+    def open_model_options_window(self, material):
+        self.clear_window()
+        OptionsOfModels(self.root, material)
         
     def clear_window(self):
         for widget in self.root.winfo_children():
