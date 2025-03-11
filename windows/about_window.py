@@ -48,7 +48,6 @@ class AboutWindow:
         # Link Scrollbar to Text widget
         text_widget.config(yscrollcommand=scrollbar.set)
 
-
         # Load text from the .txt file into the Text widget
         file_path = 'About.txt'
         try:

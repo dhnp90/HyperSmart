@@ -9,6 +9,8 @@ from data_center import ExperimentalData
 from windows.graph_display_of_data import DataInputVisualisation
 from windows.model_first_window import ModelingChoice
 from windows.model_options_window import OptionsOfModels
+from windows.exp_data_opt_window import ExpDataOptions
+from windows.mat_repository_window import MatRepositoryWindow
 
 class HyperSmartApp:
     def __init__(self, root):
@@ -44,7 +46,7 @@ class HyperSmartApp:
         ImageDisplay(self.root, "Logo_HyperSmart.png", (300,300), x=100, y=280)     # Display the main logo image
 
         # Add the "Start New Calibration" button
-        start_button = tk.Button(self.root, text="Start New Calibration", command=self.open_project_info)
+        start_button = tk.Button(self.root, text="Start New Calibration", command=self.exp_data_options)
         start_button.place(x=(500-110)/2, y=380)  
 
         # Add the "About HyperSmart" button
@@ -54,6 +56,19 @@ class HyperSmartApp:
     def show_about_info(self):
         AboutWindow(self.root)
 
+    def exp_data_options(self):
+        self.clear_window()
+        ExpDataOptions(self.root, self.open_project_info, self.data_mat_repository)
+
+    # Data Repository Branch
+    def data_mat_repository(self):
+        self.clear_window()
+        MatRepositoryWindow(self.root, self.open_experimental_data_input, self.open_data_info)
+
+    def open_data_info(self):
+        self.clear_window()
+
+    # Data Input Branch
     def open_project_info(self):
         self.clear_window()
         ProjectInfoWindow(self.root, self.open_experimental_data_input)
