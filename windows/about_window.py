@@ -1,4 +1,3 @@
-# about_window.py
 import tkinter as tk
 from tkinter import messagebox
 
@@ -7,17 +6,28 @@ class AboutWindow:
         self.root = root
         self.create_window()
 
-    def center_window(self, window, width, height):
-        screen_width = window.winfo_screenwidth()
-        screen_height = window.winfo_screenheight()
-        center_x = int(screen_width / 2 - width / 2)
-        center_y = int(screen_height / 2 - height / 2)
-        window.geometry(f'{width}x{height}+{center_x}+{center_y}')
+    def center_on_main_window(self, window, width, height):
+        # Get current position and size of the main window
+        root_x = self.root.winfo_x()
+        root_y = self.root.winfo_y()
+        root_width = self.root.winfo_width()
+        root_height = self.root.winfo_height()
+
+        # Calculate new position to center the about window on the main window
+        center_x = root_x + (root_width - width) // 2
+        center_y = root_y + (root_height - height) // 2
+
+        # Set geometry of the about window
+        window.geometry(f"{width}x{height}+{center_x}+{center_y}")
 
     def create_window(self):
         about_window = tk.Toplevel(self.root)
         about_window.title("About HyperSmart")
-        self.center_window(about_window, 450, 500)
+        
+        # Wait until the main window is fully updated to get correct dimensions
+        self.root.update_idletasks()
+        self.center_on_main_window(about_window, 450, 530)
+
         about_window.configure(bg='white')
 
         # Use TkDefaultFont for consistency
@@ -59,6 +69,8 @@ class AboutWindow:
 
         # Disable editing
         text_widget.config(state="disabled")
+
+
 
 
 

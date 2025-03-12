@@ -9,7 +9,8 @@ class ExperimentalDataWindow:
         self.proceed_callback = proceed_callback
         self.material = material
         self.root.title("Experimental Data Input")
-        self.center_window(500, 700)
+        self.root.geometry("500x700")
+        #self.center_window(500, 700)
         self.root.configure(bg='white')
 
         # Dictionary to track input status for each data type
@@ -68,8 +69,26 @@ class ExperimentalDataWindow:
         self.proceed_callback(material)
 
     def open_data_input_window(self, vector_names):
-        """Opens the ExperimentalDataInputWindow and passes the material object along with vector names."""
+        """Opens the ExperimentalDataInputWindow centered relative to the main window."""
         new_window = tk.Toplevel(self.root)  # Create a new window
+
+        # Get main window position and dimensions
+        self.root.update_idletasks()
+        main_x = self.root.winfo_x()
+        main_y = self.root.winfo_y()
+        main_width = self.root.winfo_width()
+        main_height = self.root.winfo_height()
+
+        # Define new window dimensions
+        new_width = 450
+        new_height = 600
+
+        # Calculate center position
+        new_x = main_x + (main_width // 2) - (new_width // 2)
+        new_y = main_y + (main_height // 2) - (new_height // 2)
+
+        # Set window position
+        new_window.geometry(f"{new_width}x{new_height}+{new_x}+{new_y}")
 
         # Define a callback function to update the status labels
         def on_assign_values():
@@ -110,16 +129,9 @@ class ExperimentalDataWindow:
             self.status_label4.config(text="❌", fg="red")
             self.buttons["ps_shear_parameter"].config(text="Add Data")
 
-    def center_window(self, width, height):
-        screen_width = self.root.winfo_screenwidth()
-        screen_height = self.root.winfo_screenheight()
-        center_x = int(screen_width / 2 - width / 2)
-        center_y = int(screen_height / 2 - height / 2)
-        self.root.geometry(f'{width}x{height}+{center_x}+{center_y}')
-
-#  # Test script
-# if __name__ == "__main__":
-#     root = tk.Tk()
-#     material = None  # Placeholder, replace with an actual ExperimentalData object if needed
-#     app = ExperimentalDataInputWindow(root, material)
-#     root.mainloop()
+    # def center_window(self, width, height):
+    #     screen_width = self.root.winfo_screenwidth()
+    #     screen_height = self.root.winfo_screenheight()
+    #     center_x = int(screen_width / 2 - width / 2)
+    #     center_y = int(screen_height / 2 - height / 2)
+    #     self.root.geometry(f'{width}x{height}+{center_x}+{center_y}')
