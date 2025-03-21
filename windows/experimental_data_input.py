@@ -128,10 +128,3 @@ class ExperimentalDataWindow:
         else:
             self.status_label4.config(text="❌", fg="red")
             self.buttons["ps_shear_parameter"].config(text="Add Data")
-
-    # def center_window(self, width, height):
-    #     screen_width = self.root.winfo_screenwidth()
-    #     screen_height = self.root.winfo_screenheight()
-    #     center_x = int(screen_width / 2 - width / 2)
-    #     center_y = int(screen_height / 2 - height / 2)
-    #     self.root.geometry(f'{width}x{height}+{center_x}+{center_y}')

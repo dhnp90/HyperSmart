@@ -90,12 +90,3 @@ class ExperimentalDataInputWindow:
             
         except ValueError:
             messagebox.showerror("Input Error", "Please enter valid numbers separated by spaces.")
-
-
-
-
-
-
-
-
-

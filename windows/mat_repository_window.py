@@ -14,6 +14,10 @@ class MatRepositoryWindow:
         # Display the main logo
         ImageDisplay(self.root, 'Logo_HyperSmart.png', (300, 300), x=100, y=25)
 
+        # Display text that asks for the user to choose experimental data
+        ask_to_choose = tk.Label(self.root, text="Click the chosen experimental data",font=("Arial", 13), fg="black", bg="white")
+        ask_to_choose.place(x=120, y=120)
+
         # Frame for listbox and scrollbar
         frame = tk.Frame(self.root)
         frame.place(x=50, y=150)
@@ -22,7 +26,7 @@ class MatRepositoryWindow:
         scrollbar = tk.Scrollbar(frame, orient=tk.VERTICAL)
         
         # Create a listbox to display available materials
-        self.listbox = tk.Listbox(frame, width=64, height=28, yscrollcommand=scrollbar.set)
+        self.listbox = tk.Listbox(frame, width=66, height=28, yscrollcommand=scrollbar.set)
         
         # Configure scrollbar
         scrollbar.config(command=self.listbox.yview)
@@ -34,9 +38,13 @@ class MatRepositoryWindow:
         # Load the YAML files and display available materials
         self.load_materials()
 
-        # Button to proceed with selected material
-        self.select_button = tk.Button(self.root, text="Select Material", command=self.select_material)
-        self.select_button.place(x=200, y=630)
+        # Add "Done" button
+        done_button = tk.Button(self.root, text="Done!")
+        done_button.place(x=445, y=665)
+
+        # Add "Correct/Add Data Input"
+        view_data_button = tk.Button(self.root, text="View Data Info")
+        view_data_button.place(x=350, y=665)
 
     def load_materials(self):
         """Load materials from YAML files in the 'material_repository' folder and display them."""

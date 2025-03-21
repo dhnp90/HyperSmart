@@ -69,8 +69,3 @@ class AboutWindow:
 
         # Disable editing
         text_widget.config(state="disabled")
-
-
-
-
-

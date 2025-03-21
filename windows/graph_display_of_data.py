@@ -125,6 +125,3 @@ class DataInputVisualisation:
         center_x = int(screen_width / 2 - width / 2)
         center_y = int(screen_height / 2 - ((height + 80)/ 2))
         self.root.geometry(f'{width}x{height}+{center_x}+{center_y}')
-    
-    
-

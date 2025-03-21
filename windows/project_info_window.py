@@ -47,5 +47,3 @@ class ProjectInfoWindow:
 
         # Call the proceed callback to open the next window
         self.proceed_callback(material)
-
-

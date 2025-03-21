@@ -70,9 +70,3 @@ class ExperimentalData:
     # Get method to use the stress measure constant
     def get_stress_constant(self):
         return self.stress_measure
-
-
-
-
-
-            

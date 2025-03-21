@@ -15,7 +15,7 @@ unit_of_measure:
   simple_shear: "kPa"
   pure_shear: false
 data_source: 1  # 1 = Data Published Together With the Scientific Article, 2 = Image Extraction Tool
-citation: "BUDDAY, S. et al. Mechanical characterization of human brain tissue. Acta Biomaterialia, 2017."
+citation: "Budday, S et al. Mechanical characterization of human brain tissue. Acta biomaterialia vol. 48 (2017): 319-340. doi:10.1016/j.actbio.2016.10.036"
 doi: "10.1016/j.actbio.2016.10.036"
 note: "The data were published explicitly in St. Pierre et al. (2023)"
 data:

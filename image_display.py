@@ -25,6 +25,3 @@ class ImageDisplay:
         image_label.place(x=self.x, y=self.y)
         # Keep a reference to prevent the image from being garbage collected
         image_label.image = main_image_tk
-
-
-
