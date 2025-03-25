@@ -1,4 +1,6 @@
-﻿import tkinter as tk
+﻿# mat_repository_window.py
+
+import tkinter as tk
 import os
 import yaml
 from image_display import ImageDisplay
@@ -6,8 +8,8 @@ from image_display import ImageDisplay
 class MatRepositoryWindow:
     def __init__(self, root, proceed_callback_next, proceed_callback_info):
         self.root = root
-        self.proceed_callback_next = proceed_callback_next
-        self.proceed_callback_info = proceed_callback_info 
+        self.proceed_callback_next = proceed_callback_next  
+        self.proceed_callback_info = proceed_callback_info  
         self.root.title("Repository of Experimental Data")
         self.root.geometry("500x700")
 
@@ -15,7 +17,7 @@ class MatRepositoryWindow:
         ImageDisplay(self.root, 'Logo_HyperSmart.png', (300, 300), x=100, y=25)
 
         # Display text that asks for the user to choose experimental data
-        ask_to_choose = tk.Label(self.root, text="Click the chosen experimental data",font=("Arial", 13), fg="black", bg="white")
+        ask_to_choose = tk.Label(self.root, text="Click the chosen experimental data", font=("Arial", 13), fg="black", bg="white")
         ask_to_choose.place(x=120, y=120)
 
         # Frame for listbox and scrollbar
@@ -39,11 +41,11 @@ class MatRepositoryWindow:
         self.load_materials()
 
         # Add "Done" button
-        done_button = tk.Button(self.root, text="Done!")
+        done_button = tk.Button(self.root, text="Done!", command=self.proceed_callback_next)
         done_button.place(x=445, y=665)
 
-        # Add "Correct/Add Data Input"
-        view_data_button = tk.Button(self.root, text="View Data Info")
+        # Add "View Data Info" button
+        view_data_button = tk.Button(self.root, text="View Data Info", command=self.view_selected_data)
         view_data_button.place(x=350, y=665)
 
     def load_materials(self):
@@ -77,10 +79,12 @@ class MatRepositoryWindow:
 
         self.listbox.update_idletasks()
 
-    def select_material(self):
-        """Handle selection of a material from the listbox."""
+    def view_selected_data(self):
+        """Handle selection and open the experimental data window."""
         selected_index = self.listbox.curselection()
         if selected_index:
             selected_text = self.listbox.get(selected_index)
             selected_data = self.materials[selected_text]
-            self.proceed_callback_next(selected_data)
+            
+            # Pass selected data to the main controller
+            self.proceed_callback_info(selected_data)

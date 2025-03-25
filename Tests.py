@@ -1,14 +1,12 @@
-import tkinter as tk
-from tkinter import font
+﻿import yaml
 
-# Initialize the Tkinter root window
-root = tk.Tk()
+filepath = "material_repository/basalGanglia.yaml"
 
-# Check if a specific font is available
-font_name = "Cambria Math"
-if font_name in font.families():
-    print(f"{font_name} is available!")
-else:
-    print(f"{font_name} is NOT available. Please install it.")
-
-root.mainloop()
+try:
+    with open(filepath, "r", encoding="utf-8") as file:
+        data = yaml.safe_load(file)
+        print("✅ Successfully loaded:", data)
+except yaml.YAMLError as e:
+    print("❌ YAML Error:", e)
+except Exception as e:
+    print("❌ Other Error:", e)
