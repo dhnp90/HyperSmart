@@ -2,9 +2,11 @@ import tkinter as tk
 from image_display import ImageDisplay
 
 class ChosenExpDataInfo:
-    def __init__(self, root, selected_data=None):
+    def __init__(self, root, proceed_callback_back, proceed_callback_access, selected_data=None):
         self.root = root
         self.selected_data = selected_data
+        self.proceed_callback_back = proceed_callback_back
+        self.proceed_callback_access = proceed_callback_access
         self.create_window()
 
     def create_window(self):
@@ -16,14 +18,12 @@ class ChosenExpDataInfo:
         custom_font = "TkDefaultFont"
         bold_font = (custom_font, 10, 'bold')  # Make the font bold for headings
 
-        
-
         # Frame for logo (Reserves space for the image)
         logo_frame = tk.Frame(self.root, bg="white", height=180)  # Adjust height as needed
         logo_frame.pack(fill="x")
 
         # Display the main logo
-        ImageDisplay(logo_frame, 'Logo_HyperSmart.png', (300, 300), x=100, y=10)
+        ImageDisplay(logo_frame, 'Logo_HyperSmart.png', (300, 300), x=100, y=25)
 
         # Frame to hold text and scrollbar (without expand=True)
         frame = tk.Frame(self.root, bg="white")
@@ -125,3 +125,11 @@ Note:\n{note}
         # Label
         label1 = tk.Label(self.root, text="Information About the Chosen Experimental Data:", font=bold_font, fg="black", bg="white")
         label1.place(x=12, y=168)
+
+        # Add "access data" button
+        access_data_button = tk.Button(self.root, text="Access Data", command=lambda: self.proceed_callback_access(self.selected_data))
+        access_data_button.place(x=420, y=665)
+
+        # Add "Back" button
+        back_button = tk.Button(self.root, text="Back", command=self.proceed_callback_back)
+        back_button.place(x=375, y=665)

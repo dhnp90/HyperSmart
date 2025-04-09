@@ -12,6 +12,7 @@ from windows.model_options_window import OptionsOfModels
 from windows.exp_data_opt_window import ExpDataOptions
 from windows.mat_repository_window import MatRepositoryWindow
 from windows.exp_data_info import ChosenExpDataInfo
+from windows.access_data_window import AccessExpDataWindow
 
 class HyperSmartApp:
     def __init__(self, root):
@@ -68,7 +69,11 @@ class HyperSmartApp:
 
     def open_data_info(self, selected_data=None):
         self.clear_window()
-        ChosenExpDataInfo(self.root, selected_data)
+        ChosenExpDataInfo(self.root, self.data_mat_repository, self.open_access_data, selected_data)
+
+    def open_access_data(self, selected_data):
+        self.clear_window()
+        AccessExpDataWindow(self.root, selected_data)
 
     # Data Input Branch
     def open_project_info(self):
