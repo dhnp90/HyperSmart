@@ -1,0 +1,26 @@
+material_class: "Soft Biological Tissues" # "Elastomers"; "Foams"; "Soft Biological Tissues" or "Gels & Hydrogels"
+material_subclass: "Animal"
+material: "Porcine Liver"
+publication_title: "Constitutive Modeling of Liver Tissue: Experiment and Theory"
+author: "Gao et al."
+year: 2010
+description: "Axial Compression & Tension of porcine liver"
+stress_measure: "Nominal"
+deformation_modes:
+  axial: true
+  biaxial: false
+  simple_shear: false
+  pure_shear: false
+unit_of_measure:
+  axial: "kPa"
+  biaxial: false
+  simple_shear: false
+  pure_shear: false
+data_source: 2  # 1 = Data Published Together With the Scientific Article, 2 = Image Extraction Tool
+citation: "GAO, Z.; LISTER, K.; DESAI, J. P. Constitutive Modeling of Liver Tissue: Experiment and Theory. Annals of biomedical engineering, v. 38, n. 2, p. 505, fev. 2010."
+doi: "10.1007/s10439-009-9812-0."
+note: "Both the compression and tension experimental data were presented by Gao et al. (2010) in graphs with results of multiple tests, with considerable dispersion, therefore Peixoto (2024) in his thesis used an Image Extration Tool to obtain values that represent only qualitatively the results of Gao et al. (2010), so no statistical treatment were used to define these values. The compression data refers to unconfined compression. In Gao et al. (2010) one can also find results of Pure Shear."
+data:
+  axial:
+    stretch: [0.60027894, 0.6013947, 0.60362622, 0.606973501, 0.615899582, 0.622594142, 0.629288703, 0.642677824, 0.658298466, 0.677266388, 0.712970711, 0.767642957, 0.834588563, 0.890376569, 0.950627615, 1.00195258, 1.062203626, 1.131380753, 1.205020921, 1.283124128, 1.352301255, 1.421478382, 1.486192469, 1.535285914, 1.576569038, 1.617852162, 1.653556485, 1.684797768]
+    stress: [-2.962365591, -2.693548387, -2.446236559, -2.198924731, -1.865591398, -1.553763441, -1.311827957, -1.048387097, -0.790322581, -0.510752688, -0.301075269, -0.155913978, -0.069892473, -0.032258065, -0.010752688, 4.44E-16, 0.016129032, 0.032258065, 0.059139785, 0.091397849, 0.11827957, 0.166666667, 0.252688172, 0.35483871, 0.5, 0.650537634, 0.876344086, 1.102150538]

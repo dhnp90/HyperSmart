@@ -1,3 +1,5 @@
+material_class: "Soft Biological Tissues" # "Elastomers"; "Foams"; "Soft Biological Tissues" or "Gels & Hydrogels"
+material_subclass: "Human"
 material: "Human Brain - Cortex"
 publication_title: "Mechanical characterization of human brain tissue"
 author: "Budday et al."

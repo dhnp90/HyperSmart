@@ -1,5 +1,7 @@
 import tkinter as tk
-from image_display import ImageDisplay
+from auxiliary_py_modules.image_display import ImageDisplay
+from auxiliary_py_modules.hover_over_btn import Tooltip
+import auxiliary_py_modules.geometry_manager as gm
 
 class ChosenExpDataInfo:
     def __init__(self, root, proceed_callback_back, proceed_callback_access, selected_data=None):
@@ -11,13 +13,21 @@ class ChosenExpDataInfo:
 
     def create_window(self):
         self.root.title("Material Experimental Data Information")
-        self.root.geometry("500x700")
+        
+        # Restore previous geometry 
+        geom = gm.get_centered_geometry(gm.get_last_geometry(), 500, 700)
+        self.root.geometry(geom)
+
+        # # Store the applied geometry for reuse
+        # self.root.update_idletasks()
+        # gm.set_last_geometry(self.root.geometry())
+
         self.root.configure(bg='white')
 
         # Use TkDefaultFont for consistency
         custom_font = "TkDefaultFont"
         bold_font = (custom_font, 10, 'bold')  # Make the font bold for headings
-
+        
         # Frame for logo (Reserves space for the image)
         logo_frame = tk.Frame(self.root, bg="white", height=180)  # Adjust height as needed
         logo_frame.pack(fill="x")
@@ -129,7 +139,8 @@ Note:\n{note}
         # Add "access data" button
         access_data_button = tk.Button(self.root, text="Access Data", command=lambda: self.proceed_callback_access(self.selected_data))
         access_data_button.place(x=420, y=665)
+        Tooltip(access_data_button, text="Click here to be able to see and copy the selected experimental data.")
 
         # Add "Back" button
         back_button = tk.Button(self.root, text="Back", command=self.proceed_callback_back)
-        back_button.place(x=375, y=665)
+        back_button.place(x=380, y=665)

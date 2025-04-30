@@ -1,7 +1,8 @@
 ﻿import tkinter as tk
-from image_display import ImageDisplay
-from data_center import ExperimentalData
+from auxiliary_py_modules.image_display import ImageDisplay
+from auxiliary_py_modules.data_center import ExperimentalData
 from windows.input_window import ExperimentalDataInputWindow
+import auxiliary_py_modules.geometry_manager as gm
 
 class ExperimentalDataWindow:
     def __init__(self, root, material, proceed_callback, input_status):
@@ -9,8 +10,10 @@ class ExperimentalDataWindow:
         self.proceed_callback = proceed_callback
         self.material = material
         self.root.title("Experimental Data Input")
+
+
         self.root.geometry("500x700")
-        #self.center_window(500, 700)
+        
         self.root.configure(bg='white')
 
         # Dictionary to track input status for each data type

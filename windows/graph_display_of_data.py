@@ -4,8 +4,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from image_display import ImageDisplay
-from data_center import ExperimentalData
+from auxiliary_py_modules.image_display import ImageDisplay
+from auxiliary_py_modules.data_center import ExperimentalData
 from windows.experimental_data_input import ExperimentalDataWindow
 
 class DataInputVisualisation:

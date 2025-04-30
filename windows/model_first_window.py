@@ -1,6 +1,6 @@
 # model_first_window.py
 import tkinter as tk
-from image_display import ImageDisplay
+from auxiliary_py_modules.image_display import ImageDisplay
 
 class ModelingChoice:
     def __init__(self, root, material, proceed_callbak):

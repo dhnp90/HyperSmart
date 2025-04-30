@@ -1,0 +1,26 @@
+material_class: "Foams" # "Elastomers"; "Foams"; "Soft Biological Tissues" or "Gels & Hydrogels"
+material_subclass: "Polymeric Open-Cell Foams"
+material: "Open-cell commercial foam"
+publication_title: "Elastic Response of Flexible Polyurethane Foams in Uniaxial Tension"
+author: "W. H. El-Ratal and P. K. Mallick"
+year: 1996
+description: "Uniaxial tension test of open-cell foam of general commercial use made of polyurethane"
+stress_measure: "Nominal"
+deformation_modes:
+  axial: true
+  biaxial: false
+  simple_shear: false
+  pure_shear: false
+unit_of_measure:
+  axial: "kPa"
+  biaxial: false
+  simple_shear: false
+  pure_shear: false
+data_source: 2  # 1 = Data Published Together With the Scientific Article, 2 = Image Extraction Tool
+citation: "EL-RATAL, W. H.; MALLICK, P. K. Elastic Response of Flexible Polyurethane Foams in Uniaxial Tension. Journal of Engineering Materials and Technology, v. 118, n. 2, p. 157–161, 1 abr. 1996."
+doi: "-"
+note: "The authors found variable values for the Poisson's Ratio, in the publication one can find the graph."
+data:
+  axial:
+    stretch: [1.0000, 1.1406, 1.2201, 1.2563, 1.2915, 1.3205, 1.3507, 1.3733, 1.3887, 1.4158]
+    stress: [0, 5.108228657, 8.411119416, 11.96079755, 15.29691154, 18.8023724, 22.90556212, 26.36699858, 29.74154351, 33.1612701]

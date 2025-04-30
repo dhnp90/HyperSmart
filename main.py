@@ -1,11 +1,60 @@
-﻿import tkinter as tk
+﻿''' 
+------------------------------------------------------------------------
+-------------------------------- Header --------------------------------
+------------------------------------------------------------------------
+The goal of this project is to provide scientists from various fields, 
+including mechanical, civil, and biomedical engineering, with a robust 
+tool to calibrate and select the most appropriate model to mechanically 
+describe the behavior of hyperelastic materials.
+
+Contributions:
+Dr. D. H. N. Peixoto (USP)	
+Conceptualization, Software Implementation, Research Execution
+
+Prof. Dr. E. D. Leonel (USP) 	
+Conceptualization, Research Supervision
+
+Prof. Dr. M. Greco (UFMG)
+Conceptualization, Research Collaboration
+'''
+
+'''
+------------------------------------------------------------------------
+------------------------- Software Description -------------------------
+------------------------------------------------------------------------
+This software aims to contemplate the following three main features:
+
+Experimental Data Handling:
+
+    - Experimental Data Repository;
+
+    - Experimental Data Input by User;
+
+Hyperelastic Model Selecting:
+
+    - Selection by the User of a Hyperelastic Model From The Library of
+    Models Contained in the Program;
+
+    - Insertion of Custom Hyperelastic Model by the User;
+
+    - Computational-Assisted Selection of Optimized Hyperelastic Model;
+
+Material Parameters Calibration:
+
+    - Use of Bayesian Inference Approach;
+
+    - Library of Numerical Methods for Calibration;
+'''
+
+# Importing Python Libraries
+import tkinter as tk
 from PIL import Image, ImageTk
 import os
+
+# Import classes that define/control the App Windows
 from windows.experimental_data_input import ExperimentalDataWindow
 from windows.project_info_window import ProjectInfoWindow
 from windows.about_window import AboutWindow
-from image_display import ImageDisplay
-from data_center import ExperimentalData
 from windows.graph_display_of_data import DataInputVisualisation
 from windows.model_first_window import ModelingChoice
 from windows.model_options_window import OptionsOfModels
@@ -13,7 +62,14 @@ from windows.exp_data_opt_window import ExpDataOptions
 from windows.mat_repository_window import MatRepositoryWindow
 from windows.exp_data_info import ChosenExpDataInfo
 from windows.access_data_window import AccessExpDataWindow
+from windows.rep_data_plt_window import RepDataPlotWindow
 
+# Import Auxiliary Classes
+from auxiliary_py_modules.image_display import ImageDisplay
+from auxiliary_py_modules.data_center import ExperimentalData
+import auxiliary_py_modules.geometry_manager as gm
+
+# The HyperSmartApp class is the main of the software
 class HyperSmartApp:
     def __init__(self, root):
         self.root = root
@@ -59,26 +115,55 @@ class HyperSmartApp:
         AboutWindow(self.root)
 
     def exp_data_options(self):
+        # Store the applied geometry for reuse
+        self.root.update_idletasks()
+        gm.set_last_geometry(self.root.geometry())
+        # Destroy previous Window
         self.clear_window()
-        ExpDataOptions(self.root, self.open_project_info, self.data_mat_repository)
+        # Call class which defines the new window design and functionality
+        ExpDataOptions(self.root, self.open_project_info, self.data_mat_repository, self.open_main_window)
 
-    # Data Repository Branch
+    # ------------------------------------------------- Data Repository Branch ------------------------------------------------- 
     def data_mat_repository(self):
+        # Store the applied geometry for reuse
+        self.root.update_idletasks()
+        gm.set_last_geometry(self.root.geometry())
+        # Destroy previous Window
         self.clear_window()
-        MatRepositoryWindow(self.root, self.open_experimental_data_input, self.open_data_info)
+        # Call class which defines the new window design and functionality
+        MatRepositoryWindow(self.root, self.exp_data_options, self.open_experimental_data_input, self.open_data_info)
 
     def open_data_info(self, selected_data=None):
+        # Store the applied geometry for reuse
+        self.root.update_idletasks()
+        gm.set_last_geometry(self.root.geometry())
+        # Destroy previous Window
         self.clear_window()
+        # Call class which defines the new window design and functionality
         ChosenExpDataInfo(self.root, self.data_mat_repository, self.open_access_data, selected_data)
 
     def open_access_data(self, selected_data):
+        # Store the applied geometry for reuse
+        self.root.update_idletasks()
+        gm.set_last_geometry(self.root.geometry())
+        # Destroy previous Window
         self.clear_window()
-        AccessExpDataWindow(self.root, selected_data)
+        # Call class which defines the new window design and functionality
+        AccessExpDataWindow(self.root,self.data_mat_repository,self.repository_data_plt, selected_data)
 
-    # Data Input Branch
+    def repository_data_plt(self, selected_data):
+        # Store the applied geometry for reuse
+        self.root.update_idletasks()
+        gm.set_last_geometry(self.root.geometry())
+        # Destroy previous Window
+        self.clear_window()
+        # Call class which defines the new window design and functionality
+        RepDataPlotWindow(self.root,self.data_mat_repository, selected_data)
+
+    # ------------------------------------------------- Data Input Branch -------------------------------------------------
     def open_project_info(self):
         self.clear_window()
-        ProjectInfoWindow(self.root, self.open_experimental_data_input)
+        ProjectInfoWindow(self.root, self.open_experimental_data_input, self.exp_data_options)
 
     def open_experimental_data_input(self, material):
         self.clear_window()

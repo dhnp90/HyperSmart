@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from image_display import ImageDisplay
+from auxiliary_py_modules.image_display import ImageDisplay
 
 class OptionsOfModels:
     def __init__(self, root, material):

@@ -1,13 +1,14 @@
 import tkinter as tk
 from tkinter import ttk
-from image_display import ImageDisplay
-from data_center import ExperimentalData
+from auxiliary_py_modules.image_display import ImageDisplay
+from auxiliary_py_modules.data_center import ExperimentalData
 from windows.experimental_data_input import ExperimentalDataWindow
 
 class ProjectInfoWindow:
-    def __init__(self, root, proceed_callback):
+    def __init__(self, root, proceed_callback_next, proceed_callback_back):
         self.root = root
-        self.proceed_callback = proceed_callback
+        self.proceed_callback_next = proceed_callback_next
+        self.proceed_callback_back = proceed_callback_back
         self.root.title("Stress Measure Selection")
         self.root.geometry("500x700")
 
@@ -32,6 +33,10 @@ class ProjectInfoWindow:
         # Next button to submit the material name
         next_button = tk.Button(self.root, text="Next", command=self.proceed)
         next_button.place(x=450, y=665)
+
+        # Add "Back" button
+        back_button = tk.Button(self.root, text="Back", command=self.proceed_callback_back)
+        back_button.place(x=410, y=665)
     
     def proceed(self):
         # Create/Initialize a Material object 
@@ -46,4 +51,4 @@ class ProjectInfoWindow:
         material.assign_stress_measure('stress_measure', stress_measure)
 
         # Call the proceed callback to open the next window
-        self.proceed_callback(material)
+        self.proceed_callback_next(material)

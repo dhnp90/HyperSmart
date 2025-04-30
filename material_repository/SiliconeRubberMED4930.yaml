@@ -1,0 +1,29 @@
+material_class: "Elastomers" # "Elastomers"; "Foams"; "Soft Biological Tissues" or "Gels & Hydrogels"
+material_subclass: "Silicone Rubbers (Q)"
+material: "Silicone Rubber - MED4930"
+publication_title: "Uniaxial and equi-biaxial tension tests of silicone elastomer"
+author: "Meier et al."
+year: 2003
+description: "Uniaxial and equi-biaxial tension tests of silicone elastomer from the MED-49xx series (NUSIL®, Polytec®) and used by Meier et al. (2003) in the development of a Peristaltically Actuated Device for Minimally Invasive Surgery"
+stress_measure: "Cauchy"
+deformation_modes:
+  axial: true
+  biaxial: true
+  simple_shear: false
+  pure_shear: false
+unit_of_measure:
+  axial: "MPa"
+  biaxial: "MPa"
+  simple_shear: false
+  pure_shear: false
+data_source: 2  # 1 = Data Published Together With the Scientific Article, 2 = Image Extraction Tool
+citation: "Meier, P., Khader, S., Preub, R., Dietrich, J., & Voges, D. (2003). Uniaxial and equi- biaxial tension tests of silicone elastomer - Constitutive Models for Rubber III. Busfield & Muhr"
+doi: "-"
+note: "The plubication has no DOI, but can be found in http://www.maschinenbau.tu-ilmenau.de/pademis/pdf/eccmr-03.pdf"
+data:
+  axial:
+    stretch: [1.0000, 1.4770, 1.9326, 2.4167, 2.8937, 3.3779, 3.8765, 4.3395, 4.7670, 5.1661, 5.5152, 5.8787, 6.2851, 6.5774, 6.8913, 7.2479, 7.5761, 7.8046]
+    stress: [0, 0.711864407, 1.423728814, 2.542372881, 3.966101695, 6.101694915, 8.949152542, 12.30508475, 15.76271186, 19.83050847, 23.49152542, 27.76271186, 33.05084746, 37.83050847, 43.62711864, 49.42372881, 56.23728814, 63.05084746]
+  biaxial:
+    stretch: [1, 1.430769231, 1.846153846, 2.253846154, 2.607692308, 2.869230769, 3.207692308, 3.465384615, 3.730769231, 3.976923077, 4.188461538, 4.353846154, 4.553846154]
+    stress: [0, 0.630472855, 1.260945709, 2.206654991, 3.397548161, 4.413309982, 6.234676007, 7.880910683, 9.912434326, 12.29422067, 14.5709282, 16.67250438, 19.54465849]

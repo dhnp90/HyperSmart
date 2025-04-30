@@ -1,0 +1,26 @@
+material_class: "Elastomers" # "Elastomers"; "Foams"; "Soft Biological Tissues" or "Gels & Hydrogels"
+material_subclass: "Natural Rubber (NR)"
+material: "Pure Natural Rubber - 0% Carbon Black"
+publication_title: "COMPARATIVE CURVE FITTING THROUGH HYPERELASTIC CONSTITUTIVE MODELS FOR SEVERAL FORMULATIONS OF CARBON-BRACK-FILLED RUBBER VULCANIZATES"
+author: "Paula et al."
+year: 2019
+description: "Experimental data of uniaxial tension test (according to ASTM D412) performed on a pure vulcanized natural rubber especimen supplied by Vibtech®"
+stress_measure: "Nominal"
+deformation_modes:
+  axial: true
+  biaxial: false
+  simple_shear: false
+  pure_shear: false
+unit_of_measure:
+  axial: "MPa"
+  biaxial: false
+  simple_shear: false
+  pure_shear: false
+data_source: 2  # 1 = Data Published Together With the Scientific Publication, 2 = Image Extraction Tool Used to Obtain Data Published In Graphs 
+citation: "J. P. A. Paula, D. F. Lalo, Á. M. Almeida e M. Greco, “Comparative curve fitting through hyperelastic constitutive models for several formulations of carbonbrack-filled rubber vulcanizates”, in Ibero-latin-amer. congr. comput. methods eng., Natal, Brasil, 2019-11-11–14. Belo Horizonte: ABMEC, 2019, pp. 1–18."
+doi: "-"
+note: "-"
+data:
+  axial:
+    stretch: [1.000000, 1.398773006, 1.766871166, 2.116564417, 2.472392638, 2.82208589, 3.171779141, 3.496932515, 3.809815951, 4.110429448, 4.429447853, 4.760736196, 5.09202454, 5.392638037, 5.662576687, 5.895705521, 6.104294479, 6.319018405, 6.509202454, 6.705521472, 6.90797546]
+    stress: [0.000000, 0.534759, 0.855614973, 1.016042781, 1.176470588, 1.390374332, 1.604278075, 1.818181818, 2.085561497, 2.352941176, 2.673796791, 3.101604278, 3.636363636, 4.385026738, 5.401069519, 6.684491979, 8.181818182, 10.05347594, 12.03208556, 14.3315508, 16.89839572]
