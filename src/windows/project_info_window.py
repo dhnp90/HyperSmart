@@ -3,6 +3,8 @@ from tkinter import ttk
 from auxiliary_py_modules.image_display import ImageDisplay
 from auxiliary_py_modules.data_center import ExperimentalData
 from windows.experimental_data_input import ExperimentalDataWindow
+from auxiliary_py_modules.path_helpers import resolve_path
+import auxiliary_py_modules.geometry_manager as gm
 
 class ProjectInfoWindow:
     def __init__(self, root, proceed_callback_next, proceed_callback_back):
@@ -10,10 +12,14 @@ class ProjectInfoWindow:
         self.proceed_callback_next = proceed_callback_next
         self.proceed_callback_back = proceed_callback_back
         self.root.title("Stress Measure Selection")
-        self.root.geometry("500x700")
+
+        # Restore previous geometry if available
+        geom = gm.get_centered_geometry(gm.get_last_geometry(), 500, 700)
+        self.root.geometry(geom)
 
         # Display the main logo
-        ImageDisplay(self.root, 'Logo_HyperSmart.png', (300, 300), x=100, y=25)
+        image_path = resolve_path("assets/logos/Logo_HyperSmart.png")             
+        ImageDisplay(self.root, image_path, (300, 300), x=100, y=25)
 
         # Add "Material" label and entry
         material_name_label = tk.Label(self.root, text="Material:", bg='white', font=("Helvetica", 10))

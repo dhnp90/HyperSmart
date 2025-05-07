@@ -2,6 +2,7 @@ import tkinter as tk
 from auxiliary_py_modules.image_display import ImageDisplay
 from auxiliary_py_modules.hover_over_btn import Tooltip
 import auxiliary_py_modules.geometry_manager as gm
+from auxiliary_py_modules.path_helpers import resolve_path
 
 class ChosenExpDataInfo:
     def __init__(self, root, proceed_callback_back, proceed_callback_access, selected_data=None):
@@ -9,19 +10,12 @@ class ChosenExpDataInfo:
         self.selected_data = selected_data
         self.proceed_callback_back = proceed_callback_back
         self.proceed_callback_access = proceed_callback_access
-        self.create_window()
 
-    def create_window(self):
         self.root.title("Material Experimental Data Information")
         
         # Restore previous geometry 
         geom = gm.get_centered_geometry(gm.get_last_geometry(), 500, 700)
         self.root.geometry(geom)
-
-        # # Store the applied geometry for reuse
-        # self.root.update_idletasks()
-        # gm.set_last_geometry(self.root.geometry())
-
         self.root.configure(bg='white')
 
         # Use TkDefaultFont for consistency
@@ -33,7 +27,8 @@ class ChosenExpDataInfo:
         logo_frame.pack(fill="x")
 
         # Display the main logo
-        ImageDisplay(logo_frame, 'Logo_HyperSmart.png', (300, 300), x=100, y=25)
+        image_path = resolve_path("assets/logos/Logo_HyperSmart.png")             
+        ImageDisplay(self.root, image_path, (300, 300), x=100, y=25)
 
         # Frame to hold text and scrollbar (without expand=True)
         frame = tk.Frame(self.root, bg="white")

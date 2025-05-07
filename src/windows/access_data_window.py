@@ -4,7 +4,7 @@ import tkinter as tk
 from tkinter import scrolledtext
 from auxiliary_py_modules.image_display import ImageDisplay
 import auxiliary_py_modules.geometry_manager as gm
-
+from auxiliary_py_modules.path_helpers import resolve_path
 
 class AccessExpDataWindow:
     def __init__(self, root, proceed_callback_back, proceed_callback_graph_plt, selected_data):
@@ -18,12 +18,9 @@ class AccessExpDataWindow:
         geom = gm.get_centered_geometry(gm.get_last_geometry(), 1200, 700)
         self.root.geometry(geom)
 
-        # # Store the applied geometry for reuse
-        # self.root.update_idletasks()
-        # gm.set_last_geometry(self.root.geometry())
-
         # Logo adjusted place
-        ImageDisplay(self.root, 'Logo_HyperSmart.png', (300, 300), x=450, y=25)
+        image_path = resolve_path("assets/logos/Logo_HyperSmart.png")             
+        ImageDisplay(self.root, image_path, (300, 300), x=450, y=25)
 
         # Mapping modes and positions
         modes = ["axial", "biaxial", "simple_shear", "pure_shear"]

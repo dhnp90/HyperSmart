@@ -68,6 +68,7 @@ from windows.rep_data_plt_window import RepDataPlotWindow
 from auxiliary_py_modules.image_display import ImageDisplay
 from auxiliary_py_modules.data_center import ExperimentalData
 import auxiliary_py_modules.geometry_manager as gm
+from auxiliary_py_modules.path_helpers import resolve_path
 
 # The HyperSmartApp class is the main of the software
 class HyperSmartApp:
@@ -80,7 +81,7 @@ class HyperSmartApp:
 
         # Load and set the window icon
         icon_size = (32, 32)
-        minilogo_image = Image.open('MiniLogo.png')
+        minilogo_image = Image.open(r'C:\Users\Daniel Peixoto\OneDrive\Programação\Python\ajusteCurvasSHG\HyperSmart\src\assets\logos\MiniLogo.png')
         minilogo_image.thumbnail(icon_size, Image.LANCZOS)
         minilogo_image_tk = ImageTk.PhotoImage(minilogo_image)
         self.root.iconphoto(False, minilogo_image_tk)
@@ -99,9 +100,13 @@ class HyperSmartApp:
         self.clear_window()
 
         # Images
-        ImageDisplay (self.root, "logo_cnpq.png", (50, 50), x=30, y=20)             # Display the CNPq logo image    
-        ImageDisplay (self.root, "eesc_logomarca1.png", (100, 50), x=380, y=20)     # Display the EESC logo image
-        ImageDisplay(self.root, "Logo_HyperSmart.png", (300,300), x=100, y=280)     # Display the main logo image
+        image_path = resolve_path("assets/logos/logo_cnpq.png")             # Display the CNPq logo image 
+        ImageDisplay(self.root, image_path, (50, 50), x=30, y=20)
+        image_path = resolve_path("assets/logos/eesc_logomarca1.png")       # Display the EESC logo image
+        ImageDisplay(self.root, image_path, (100, 50), x=380, y=20)
+        image_path = resolve_path("assets/logos/Logo_HyperSmart.png")       # Display the main logo image
+        ImageDisplay(self.root, image_path, (300,300), x=100, y=280)
+
 
         # Add the "Start New Calibration" button
         start_button = tk.Button(self.root, text="Start New Calibration", command=self.exp_data_options)
@@ -162,12 +167,20 @@ class HyperSmartApp:
 
     # ------------------------------------------------- Data Input Branch -------------------------------------------------
     def open_project_info(self):
+        # Store the applied geometry for reuse
+        self.root.update_idletasks()
+        gm.set_last_geometry(self.root.geometry())
+        # Destroy previous Window
         self.clear_window()
         ProjectInfoWindow(self.root, self.open_experimental_data_input, self.exp_data_options)
 
     def open_experimental_data_input(self, material):
+        # Store the applied geometry for reuse
+        self.root.update_idletasks()
+        gm.set_last_geometry(self.root.geometry())
+        # Destroy previous Window
         self.clear_window()
-        ExperimentalDataWindow(self.root, material, self.open_graph_display_of_data, self.input_status)
+        ExperimentalDataWindow(self.root, material, self.open_graph_display_of_data, self.open_project_info, self.input_status)
 
     def open_graph_display_of_data(self, material):
         self.clear_window()

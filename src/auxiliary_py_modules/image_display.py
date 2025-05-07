@@ -1,12 +1,13 @@
-# image_display.py
-
+﻿import os
 import tkinter as tk
 from PIL import Image, ImageTk
 
 class ImageDisplay:
     def __init__(self, parent, image_path, max_size, x=0, y=0):
+        # Resolve the image path relative to the current working directory (where script runs)
+        self.image_path = os.path.abspath(image_path)
+
         self.parent = parent
-        self.image_path = image_path
         self.max_size = max_size
         self.x = x
         self.y = y
@@ -25,3 +26,4 @@ class ImageDisplay:
         image_label.place(x=self.x, y=self.y)
         # Keep a reference to prevent the image from being garbage collected
         image_label.image = main_image_tk
+

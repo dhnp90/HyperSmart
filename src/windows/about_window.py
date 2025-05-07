@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+from auxiliary_py_modules.path_helpers import resolve_path
 
 class AboutWindow:
     def __init__(self, root):
@@ -59,7 +60,7 @@ class AboutWindow:
         text_widget.config(yscrollcommand=scrollbar.set)
 
         # Load text from the .txt file into the Text widget
-        file_path = 'About.txt'
+        file_path = resolve_path("assets/texts/About.txt")  # Use resolve_path to get absolute path
         try:
             with open(file_path, 'r', encoding="utf-8") as file:
                 about_text = file.read()
