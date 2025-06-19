@@ -1,9 +1,9 @@
 ﻿import tkinter as tk
-from auxiliary_py_modules.image_display import ImageDisplay
-from auxiliary_py_modules.data_center import ExperimentalData
+from helpers.image_display import ImageDisplay
+from helpers.data_center import ExperimentalData
 from windows.input_window import ExperimentalDataInputWindow
-import auxiliary_py_modules.geometry_manager as gm
-from auxiliary_py_modules.path_helpers import resolve_path
+import helpers.geometry_manager as gm
+from helpers.path_helpers import resolve_path
 
 class ExperimentalDataWindow:
     def __init__(self, root, material, proceed_callback_plot, proceed_callback_back, input_status):
@@ -68,16 +68,16 @@ class ExperimentalDataWindow:
         self.update_status_labels()
 
         # Add "Done" button
-        done_button = tk.Button(self.root, text="Done!", command=lambda: self.proceed(material))
+        done_button = tk.Button(self.root, text="Done!", command=lambda: self.proceed(material, input_status))
         done_button.place(x=450, y=665)
 
         # Add "Back" button
         back_button = tk.Button(self.root, text="Back", command=self.proceed_callback_back)
         back_button.place(x=410, y=665)
 
-    def proceed(self, material):
+    def proceed(self, material, input_status):
         # Call the proceed callback to open the next window
-        self.proceed_callback_plot(material)
+        self.proceed_callback_plot(material, input_status)
 
     def open_data_input_window(self, vector_names):
         """Opens the ExperimentalDataInputWindow centered relative to the main window."""

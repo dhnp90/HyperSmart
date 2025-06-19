@@ -1,21 +1,27 @@
 import tkinter as tk
 from tkinter import ttk
-from auxiliary_py_modules.image_display import ImageDisplay
+from helpers.image_display import ImageDisplay
+import helpers.geometry_manager as gm
+from helpers.path_helpers import resolve_path
 
 class OptionsOfModels:
     def __init__(self, root, material):
         self.root = root
         self.material = material
         self.root.title("Options of Hyperelastic Model")
-        self.center_window(500, 700)
+
+        # Restore previous geometry if available
+        geom = gm.get_centered_geometry(gm.get_last_geometry(), 500, 700)
+        self.root.geometry(geom)
         self.root.configure(bg='white')
+
+        # Display the main logo image
+        image_path = resolve_path("assets/logos/Logo_HyperSmart.png")             
+        ImageDisplay(self.root, image_path, (300, 300), x=100, y=25)
 
         # Configure style for radiobuttons to have a white background
         self.style = ttk.Style()
         self.style.configure("Custom.TRadiobutton", background="white", foreground="black")
-
-        # Display the main logo image
-        ImageDisplay(self.root, 'Logo_HyperSmart.png', (300, 300), x=100, y=25)
 
         # Label to instruct the user to choose the hyperelastic model
         label1 = tk.Label(self.root, text="Define the hyperelastic model to use:", font=("TkDefaultFont", 14), fg="black", bg="white")
@@ -94,10 +100,3 @@ class OptionsOfModels:
             print(f"Selected model: {selected}")  # You can replace this with the actual next step
         else:
             print("No model selected. Please choose one.")
-
-    def center_window(self, width, height):
-        screen_width = self.root.winfo_screenwidth()
-        screen_height = self.root.winfo_screenheight()
-        center_x = int(screen_width / 2 - width / 2)
-        center_y = int(screen_height / 2 - height / 2)
-        self.root.geometry(f'{width}x{height}+{center_x}+{center_y}')

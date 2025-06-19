@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-from auxiliary_py_modules.path_helpers import resolve_path
+from helpers.path_helpers import resolve_path
 
 class AboutWindow:
     def __init__(self, root):

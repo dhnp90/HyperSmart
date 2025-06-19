@@ -1,0 +1,22 @@
+model_name: "Neo-Hookean"
+model_class: "Series function based on invariants"      # "Hookean-type", "Series function based on invariants", "Power law, exponential or logarithmic functions based on invariants", "Models based on stretch ratio"
+description: "The Neo-Hookean model is a simple hyperelastic material model that describes nonlinear elastic behavior based on a strain energy function dependent on the first invariant of the deformation tensor."
+number_of_parameters: 1
+material_constants:
+  - name: C10
+    initial_guess: 1.0
+    bounds: [0.001, inf]
+info_constraints: ""
+deformation_modes:
+  uniaxial:
+    expression_nominal: "2*C10*(lambda - 1/lambda**2)"
+    expression_cauchy: "2*C10*(lambda**2 - 1/lambda)"
+  biaxial:
+    expression_nominal: "2*C10*(lambda - 1/lambda**5)"
+    expression_cauchy: "2*C10*(lambda**2 - 1/lambda**4)"
+  pure_shear:
+    expression_nominal: "2*C10*(lambda**2 - 1/lambda**2)"
+    expression_cauchy: "2*C10*(lambda - 1/lambda**3)"
+simple_shear:
+    expression_nominal: "2*C10*gamma"
+    expression_cauchy: "2*C10*gamma"

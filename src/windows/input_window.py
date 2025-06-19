@@ -1,7 +1,7 @@
 ﻿import tkinter as tk
 from tkinter import messagebox
 import numpy as np
-from auxiliary_py_modules.data_center import ExperimentalData
+from helpers.data_center import ExperimentalData
 
 class ExperimentalDataInputWindow:
     def __init__(self, root, material, vector_names, on_assign_callback):

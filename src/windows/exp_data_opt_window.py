@@ -1,8 +1,8 @@
 # exp_data_opt_window.py
 import tkinter as tk
-import auxiliary_py_modules.geometry_manager as gm
-from auxiliary_py_modules.image_display import ImageDisplay
-from auxiliary_py_modules.path_helpers import resolve_path
+import helpers.geometry_manager as gm
+from helpers.image_display import ImageDisplay
+from helpers.path_helpers import resolve_path
 
 class ExpDataOptions:
     def __init__(self, root, proceed_callback_input, proceed_callback_repository, proceed_callback_back):

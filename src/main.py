@@ -65,10 +65,10 @@ from windows.access_data_window import AccessExpDataWindow
 from windows.rep_data_plt_window import RepDataPlotWindow
 
 # Import Auxiliary Classes
-from auxiliary_py_modules.image_display import ImageDisplay
-from auxiliary_py_modules.data_center import ExperimentalData
-import auxiliary_py_modules.geometry_manager as gm
-from auxiliary_py_modules.path_helpers import resolve_path
+from helpers.image_display import ImageDisplay
+from helpers.data_center import ExperimentalData
+import helpers.geometry_manager as gm
+from helpers.path_helpers import resolve_path
 
 # The HyperSmartApp class is the main of the software
 class HyperSmartApp:
@@ -101,12 +101,13 @@ class HyperSmartApp:
 
         # Images
         image_path = resolve_path("assets/logos/logo_cnpq.png")             # Display the CNPq logo image 
-        ImageDisplay(self.root, image_path, (50, 50), x=30, y=20)
+        ImageDisplay(self.root, image_path, (70,70), x=20, y=40)
         image_path = resolve_path("assets/logos/eesc_logomarca1.png")       # Display the EESC logo image
-        ImageDisplay(self.root, image_path, (100, 50), x=380, y=20)
+        ImageDisplay(self.root, image_path, (180, 100), x=160, y=30)
         image_path = resolve_path("assets/logos/Logo_HyperSmart.png")       # Display the main logo image
         ImageDisplay(self.root, image_path, (300,300), x=100, y=280)
-
+        image_path = resolve_path("assets/logos/LogoEEUFMG1.png")            # Display the EEUFMG logo image
+        ImageDisplay(self.root, image_path, (90,90), x=395, y=25)
 
         # Add the "Start New Calibration" button
         start_button = tk.Button(self.root, text="Start New Calibration", command=self.exp_data_options)
@@ -174,23 +175,35 @@ class HyperSmartApp:
         self.clear_window()
         ProjectInfoWindow(self.root, self.open_experimental_data_input, self.exp_data_options)
 
-    def open_experimental_data_input(self, material):
+    def open_experimental_data_input(self, material, input_status):
         # Store the applied geometry for reuse
         self.root.update_idletasks()
         gm.set_last_geometry(self.root.geometry())
         # Destroy previous Window
         self.clear_window()
-        ExperimentalDataWindow(self.root, material, self.open_graph_display_of_data, self.open_project_info, self.input_status)
+        ExperimentalDataWindow(self.root, material, self.open_graph_display_of_data, self.open_project_info, input_status)
 
-    def open_graph_display_of_data(self, material):
+    def open_graph_display_of_data(self, material, input_status):
+        # Store the applied geometry for reuse
+        self.root.update_idletasks()
+        gm.set_last_geometry(self.root.geometry())
+        # Destroy previous Window
         self.clear_window()
-        DataInputVisualisation(self.root, material, self.open_model_first_window, self.open_experimental_data_input)
+        DataInputVisualisation(self.root, material, self.open_model_first_window, self.open_experimental_data_input, input_status)
 
-    def open_model_first_window(self, material):
+    def open_model_first_window(self, material, input_status):
+        # Store the applied geometry for reuse
+        self.root.update_idletasks()
+        gm.set_last_geometry(self.root.geometry())
+        # Destroy previous Window
         self.clear_window()
-        ModelingChoice(self.root, material, self.open_model_options_window)
-    
+        ModelingChoice(self.root, material, self.open_model_options_window, self.open_graph_display_of_data, input_status)
+
     def open_model_options_window(self, material):
+        # Store the applied geometry for reuse
+        self.root.update_idletasks()
+        gm.set_last_geometry(self.root.geometry())
+        # Destroy previous Window
         self.clear_window()
         OptionsOfModels(self.root, material)
         

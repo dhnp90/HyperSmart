@@ -17,7 +17,10 @@ class ExperimentalData:
         self.ps_stress = np.array([])
 
         # Stress Information
-        self.stress_measure = 0     # Nominal as default -> stress_measure = 0, Cauchy -> stress_measure = 1
+        self.stress_measure = 0             # Nominal as default -> stress_measure = 0; Cauchy -> stress_measure = 1
+
+        # Unit of measurement information
+        self.unit_of_measurement = 0        # MPa as default -> unit_of_measurement = 0; kPa -> unit_of_measurement = 1
 
         # Initialize the material constants of the hyperelastic model
         self.a1 = 0         
@@ -51,13 +54,25 @@ class ExperimentalData:
         else:
             print(f"Constant '{constant_name}' does not exist")
 
+    # Get method to use the constant values (material parameters)
+    def get_constant(self, constant_name):
+        return getattr(self, constant_name, None)
+
     # Method to assign value to the constant that define the stress measure 
     def assign_stress_measure(self, stress_constant, value):
         setattr(self, stress_constant, value)
 
-    # Get method to use the constant values (material parameters)
-    def get_constant(self, constant_name):
-        return getattr(self, constant_name, None)
+    # Get method to use the stress measure constant
+    def get_stress_constant(self):
+        return self.stress_measure
+
+    # Method to assign value to the constant that define the unit of measurement
+    def assign_unit(self, unit_of_measurement, value):
+        setattr(self, unit_of_measurement, value)
+
+    # Get method to use the stress measure constant
+    def get_stress_constant(self):
+        return self.unit_of_measurement
 
     # Method to assign the material name given by the user
     def assign_material_name(self, name):
@@ -67,6 +82,3 @@ class ExperimentalData:
     def get_material_name(self):
         return self.material_name
 
-    # Get method to use the stress measure constant
-    def get_stress_constant(self):
-        return self.stress_measure

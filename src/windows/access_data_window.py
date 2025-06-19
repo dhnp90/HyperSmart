@@ -2,9 +2,9 @@
 
 import tkinter as tk
 from tkinter import scrolledtext
-from auxiliary_py_modules.image_display import ImageDisplay
-import auxiliary_py_modules.geometry_manager as gm
-from auxiliary_py_modules.path_helpers import resolve_path
+from helpers.image_display import ImageDisplay
+import helpers.geometry_manager as gm
+from helpers.path_helpers import resolve_path
 
 class AccessExpDataWindow:
     def __init__(self, root, proceed_callback_back, proceed_callback_graph_plt, selected_data):

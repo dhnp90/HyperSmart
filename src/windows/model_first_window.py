@@ -1,19 +1,27 @@
 # model_first_window.py
 import tkinter as tk
-from auxiliary_py_modules.image_display import ImageDisplay
+from helpers.image_display import ImageDisplay
+import helpers.geometry_manager as gm
+from helpers.path_helpers import resolve_path
 
 class ModelingChoice:
-    def __init__(self, root, material, proceed_callbak):
+    def __init__(self, root, material, proceed_callbak_foward, proceed_callback_back, input_status):
         self.root = root
         self.material = material
-        self.proceed_callback = proceed_callbak
-
+        self.input_status = input_status
+        self.proceed_callback_foward = proceed_callbak_foward
+        self.proceed_callback_back = proceed_callback_back
         self.root.title("Defining Hyperelastic Model")
-        self.center_window(500, 700)
+
+        # Restore previous geometry if available
+        geom = gm.get_centered_geometry(gm.get_last_geometry(), 500, 700)
+        self.root.geometry(geom)
+
         self.root.configure(bg='white')
 
         # Display the main logo image
-        ImageDisplay(self.root, 'Logo_HyperSmart.png', (300, 300), x=100, y=25)
+        image_path = resolve_path("assets/logos/Logo_HyperSmart.png")             
+        ImageDisplay(self.root, image_path, (300, 300), x=100, y=25)
 
         # Create the button to ask help to define the best hyperelastic model 
         help_choose_model_button = tk.Button(self.root, text='Help me define the best hyperelastic model to represent my material', width=55, height=1, justify="center")
@@ -23,13 +31,11 @@ class ModelingChoice:
         help_calibration_button = tk.Button(self.root, text='I already chose the most appropriate hyperelastic model;\n Help me calibrate its material parameters', width=55, height=2, justify="center",command=self.open_options_window)
         help_calibration_button.place(x=54, y=360)
 
+        # Create button to go back to previous window
+        back_button = tk.Button(self.root, text="Back", command=lambda: self.proceed_callback_back(material, input_status)) 
+        back_button.place(x=450, y=665)
+
     def open_options_window(self):
         """Call the callback function to open OptionsOfModels window."""
-        self.proceed_callback(self.material)
+        self.proceed_callback_foward(self.material)
 
-    def center_window(self, width, height):
-        screen_width = self.root.winfo_screenwidth()
-        screen_height = self.root.winfo_screenheight()
-        center_x = int(screen_width / 2 - width / 2)
-        center_y = int(screen_height / 2 - height / 2)
-        self.root.geometry(f'{width}x{height}+{center_x}+{center_y}')

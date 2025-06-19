@@ -1,10 +1,10 @@
 import tkinter as tk
 from tkinter import ttk
-from auxiliary_py_modules.image_display import ImageDisplay
-from auxiliary_py_modules.data_center import ExperimentalData
+from helpers.image_display import ImageDisplay
+from helpers.data_center import ExperimentalData
 from windows.experimental_data_input import ExperimentalDataWindow
-from auxiliary_py_modules.path_helpers import resolve_path
-import auxiliary_py_modules.geometry_manager as gm
+from helpers.path_helpers import resolve_path
+import helpers.geometry_manager as gm
 
 class ProjectInfoWindow:
     def __init__(self, root, proceed_callback_next, proceed_callback_back):
@@ -36,6 +36,15 @@ class ProjectInfoWindow:
         stress_measure_combobox.place(x=50, y=320, width=400)
         stress_measure_combobox.current(0)  # Set the default value
 
+        # Add "Choose the Unit of Measurement" label and combobox 
+        unit_label = tk.Label(self.root, text="Choose the Stress Measure:", bg='white', font=("Helvetica", 10))
+        unit_label.place(x=50, y=350)
+        self.unit_var = tk.StringVar(self.root)
+        unit_combobox = ttk.Combobox(self.root, textvariable=self.unit_var)
+        unit_combobox['values'] = ("MPa", "kPa")
+        unit_combobox.place(x=50, y=370, width=400)
+        unit_combobox.current(0)  # Set the default value
+
         # Next button to submit the material name
         next_button = tk.Button(self.root, text="Next", command=self.proceed)
         next_button.place(x=450, y=665)
@@ -56,5 +65,17 @@ class ProjectInfoWindow:
         stress_measure = 0 if self.stress_measure_var.get() == "Nominal Stress" else 1
         material.assign_stress_measure('stress_measure', stress_measure)
 
+        # Assign the unit of measurement based on user selection
+        unit_of_measurement = 0 if self.unit_var.get() == "MPa" else 1
+        material.assign_unit('stress_measure', unit_of_measurement)
+
+        # Reset input_status dictionary
+        input_status = {
+            "sae_stretch": False,
+            "ebl_stretch": False,
+            "ss_shear_parameter": False,
+            "ps_shear_parameter": False
+        }
+
         # Call the proceed callback to open the next window
-        self.proceed_callback_next(material)
+        self.proceed_callback_next(material, input_status)

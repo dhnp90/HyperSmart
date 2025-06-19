@@ -1,8 +1,8 @@
 import tkinter as tk
-from auxiliary_py_modules.image_display import ImageDisplay
-from auxiliary_py_modules.hover_over_btn import Tooltip
-import auxiliary_py_modules.geometry_manager as gm
-from auxiliary_py_modules.path_helpers import resolve_path
+from helpers.image_display import ImageDisplay
+from helpers.hover_over_btn import Tooltip
+import helpers.geometry_manager as gm
+from helpers.path_helpers import resolve_path
 
 class ChosenExpDataInfo:
     def __init__(self, root, proceed_callback_back, proceed_callback_access, selected_data=None):

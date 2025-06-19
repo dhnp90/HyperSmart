@@ -4,10 +4,10 @@ import tkinter as tk
 from tkinter import messagebox
 import os
 import yaml
-from auxiliary_py_modules.image_display import ImageDisplay
-from auxiliary_py_modules.hover_over_btn import Tooltip
-import auxiliary_py_modules.geometry_manager as gm
-from auxiliary_py_modules.path_helpers import resolve_path
+from helpers.image_display import ImageDisplay
+from helpers.hover_over_btn import Tooltip
+import helpers.geometry_manager as gm
+from helpers.path_helpers import resolve_path
 
 VALID_CLASSES_AND_SUBCLASSES = {
     "Elastomers": [
