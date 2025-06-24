@@ -6,6 +6,7 @@ import os
 import yaml
 from helpers.image_display import ImageDisplay
 from helpers.hover_over_btn import Tooltip
+from helpers.data_center import ExperimentalData
 import helpers.geometry_manager as gm
 from helpers.path_helpers import resolve_path
 
@@ -89,7 +90,7 @@ class MatRepositoryWindow:
         self.subclass_var.trace("w", lambda *args: self.filter_materials())
 
         # Add Buttons
-        done_button = tk.Button(self.root, text="Done!", command=self.proceed_callback_next)
+        done_button = tk.Button(self.root, text="Done!", command=self.proceed)
         done_button.place(x=445, y=665)
         Tooltip(done_button, text="Click here if you want to use the selected experimental data on the calibration.")
 
@@ -154,3 +155,63 @@ class MatRepositoryWindow:
             selected_data = self.materials.get(selected_text)
             if selected_data:
                 self.proceed_callback_info(selected_data)
+
+    def proceed(self):
+        # Get the selected data and create an dictionary
+        selected_index = self.listbox.curselection()
+        if selected_index:
+            selected_text = self.listbox.get(selected_index)
+            selected_data = self.materials.get(selected_text)
+
+        # Create/Initialize a Material object 
+        material = ExperimentalData()
+        
+        # Assign material name based on the choosen material
+        material_name = selected_data["material"]
+        material.assign_material_name(material_name)
+
+        # Assign the stress measure based on user selection
+        stress_measure = 0 if selected_data["stress_measure"] == "Nominal" else 1
+        material.assign_stress_measure('stress_measure', stress_measure)
+
+        
+        # Assign unit of measurement: assume "MPa" = 0, "kPa" = 1
+        units = selected_data.get("unit_of_measure", {})
+        unit_str1 = units.get("axial"); unit_str2 = units.get("biaxial"); unit_str3 = units.get("simple_shear"); unit_str4 = units.get("pure_shear")     # Get values
+        unit_vals = [unit_str1, unit_str2, unit_str3, unit_str4]
+        unit_of_measurement = 0  # Default to MPa
+        for val in unit_vals:                                           # Normalize to lowercase only if the value is a string
+            if isinstance(val, str) and val.lower() == "kpa":
+                unit_of_measurement = 1
+                break
+        material.assign_unit("unit_of_measurement", unit_of_measurement)    # Assign
+
+        # Create input_status
+        input_status = {
+            "sae_stretch": selected_data.get("deformation_modes", {}).get("axial", False),
+            "ebl_stretch": selected_data.get("deformation_modes", {}).get("biaxial", False),
+            "ss_shear_parameter": selected_data.get("deformation_modes", {}).get("simple_shear", False),
+            "ps_shear_parameter": selected_data.get("deformation_modes", {}).get("pure_shear", False)
+            }
+
+        # Assign values of vectors in the ExperimentalData object
+        deformation_data = selected_data.get("data", {})
+    
+        if "axial" in deformation_data:
+            material.assign_vector("sae_stretch", deformation_data["axial"].get("stretch", []))
+            material.assign_vector("sae_stress", deformation_data["axial"].get("stress", []))
+
+        if "biaxial" in deformation_data:
+            material.assign_vector("ebl_stretch", deformation_data["biaxial"].get("stretch", []))
+            material.assign_vector("ebl_stress", deformation_data["biaxial"].get("stress", []))
+
+        if "simple_shear" in deformation_data:
+            material.assign_vector("ss_shear_parameter", deformation_data["simple_shear"].get("shear_parameter", []))  
+            material.assign_vector("ss_stress", deformation_data["simple_shear"].get("stress", []))
+
+        if "pure_shear" in deformation_data:
+            material.assign_vector("ps_shear_parameter", deformation_data["pure_shear"].get("shear_parameter", [])) 
+            material.assign_vector("ps_stress", deformation_data["pure_shear"].get("stress", []))
+
+        # Call the proceed callback to open the next window
+        self.proceed_callback_next(material, input_status)

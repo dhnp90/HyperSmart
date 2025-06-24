@@ -63,6 +63,7 @@ from windows.mat_repository_window import MatRepositoryWindow
 from windows.exp_data_info import ChosenExpDataInfo
 from windows.access_data_window import AccessExpDataWindow
 from windows.rep_data_plt_window import RepDataPlotWindow
+from windows.rep_data_plt_confirm import RepDataPlotConfirmWindow
 
 # Import Auxiliary Classes
 from helpers.image_display import ImageDisplay
@@ -73,6 +74,8 @@ from helpers.path_helpers import resolve_path
 # The HyperSmartApp class is the main of the software
 class HyperSmartApp:
     def __init__(self, root):
+
+        # ------------------------------------------------ App First Window and About ------------------------------------------------
         self.root = root
         self.input_status = {"sae_stretch": False, "ebl_stretch": False, "ss_shear_parameter": False, "ps_shear_parameter": False}
         self.root.title("HyperSmart Software")
@@ -120,6 +123,11 @@ class HyperSmartApp:
     def show_about_info(self):
         AboutWindow(self.root)
 
+    # ----------------------------------------------------------------------------------------------------------------------------------------
+    # ------------------------------------------- Experimental Data Core: Repository & User Input --------------------------------------------
+    # ----------------------------------------------------------------------------------------------------------------------------------------
+
+    # ---------------------------------------- First Window of the Experimental Data Core: Options -------------------------------------------
     def exp_data_options(self):
         # Store the applied geometry for reuse
         self.root.update_idletasks()
@@ -129,7 +137,7 @@ class HyperSmartApp:
         # Call class which defines the new window design and functionality
         ExpDataOptions(self.root, self.open_project_info, self.data_mat_repository, self.open_main_window)
 
-    # ------------------------------------------------- Data Repository Branch ------------------------------------------------- 
+    # ------------------------------------------------------- Data Repository Branch ---------------------------------------------------------
     def data_mat_repository(self):
         # Store the applied geometry for reuse
         self.root.update_idletasks()
@@ -137,7 +145,7 @@ class HyperSmartApp:
         # Destroy previous Window
         self.clear_window()
         # Call class which defines the new window design and functionality
-        MatRepositoryWindow(self.root, self.exp_data_options, self.open_experimental_data_input, self.open_data_info)
+        MatRepositoryWindow(self.root, self.exp_data_options, self.rep_data_plt_confirm, self.open_data_info)
 
     def open_data_info(self, selected_data=None):
         # Store the applied geometry for reuse
@@ -166,7 +174,16 @@ class HyperSmartApp:
         # Call class which defines the new window design and functionality
         RepDataPlotWindow(self.root,self.data_mat_repository, selected_data)
 
-    # ------------------------------------------------- Data Input Branch -------------------------------------------------
+    def rep_data_plt_confirm(self, material, input_status):
+        # Store the applied geometry for reuse
+        self.root.update_idletasks()
+        gm.set_last_geometry(self.root.geometry())
+        # Destroy previous Window
+        self.clear_window()
+        # Call class which defines the new window design and functionality
+        RepDataPlotConfirmWindow(self.root, self.data_mat_repository, self.open_model_first_window, material, input_status)
+    
+    # ------------------------------------------------------ User Data Input Branch ----------------------------------------------------------
     def open_project_info(self):
         # Store the applied geometry for reuse
         self.root.update_idletasks()
@@ -191,14 +208,22 @@ class HyperSmartApp:
         self.clear_window()
         DataInputVisualisation(self.root, material, self.open_model_first_window, self.open_experimental_data_input, input_status)
 
+    # ----------------------------------------------------------------------------------------------------------------------------------------
+    # --------------------------------------------------- Hyperelastic Model Selection Core --------------------------------------------------
+    # ----------------------------------------------------------------------------------------------------------------------------------------  
+
+    # ---------------------------------- First Window of the Hyperelastic Model Selection Core: Options --------------------------------------
+
     def open_model_first_window(self, material, input_status):
         # Store the applied geometry for reuse
         self.root.update_idletasks()
         gm.set_last_geometry(self.root.geometry())
         # Destroy previous Window
         self.clear_window()
-        ModelingChoice(self.root, material, self.open_model_options_window, self.open_graph_display_of_data, input_status)
+        ModelingChoice(self.root, material, self.open_model_options_window, self.exp_data_options, input_status)
 
+    # -------------------------------------------------- Library of Hyperelastic Models ------------------------------------------------------
+    
     def open_model_options_window(self, material):
         # Store the applied geometry for reuse
         self.root.update_idletasks()
@@ -206,7 +231,9 @@ class HyperSmartApp:
         # Destroy previous Window
         self.clear_window()
         OptionsOfModels(self.root, material)
-        
+    
+    
+
     def clear_window(self):
         for widget in self.root.winfo_children():
             widget.destroy()

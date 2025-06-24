@@ -32,7 +32,7 @@ class ModelingChoice:
         help_calibration_button.place(x=54, y=360)
 
         # Create button to go back to previous window
-        back_button = tk.Button(self.root, text="Back", command=lambda: self.proceed_callback_back(material, input_status)) 
+        back_button = tk.Button(self.root, text="Back", command=self.proceed_callback_back) 
         back_button.place(x=450, y=665)
 
     def open_options_window(self):
