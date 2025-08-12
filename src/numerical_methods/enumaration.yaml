@@ -1,0 +1,28 @@
+# numerical_methods/enumeration.yaml
+method_name: "Enumeration (Grid Search)"
+
+description: |
+  Enumeration performs a brute-force grid search in the material-parameter
+  space.  The user defines a lower bound, upper bound, and step size
+  (Δ) for each parameter.  The algorithm evaluates every possible
+  combination, computes the REQMN error (see below), and returns the
+  parameter set with the minimum REQMN.
+  
+  • Guarantees the true optimum **if** the optimum lies exactly on the grid.  
+  • Very easy to understand and diagnose.  
+  • Computational cost grows exponentially with (i) the number of
+    parameters and (ii) finer step sizes, so it is practical only for a
+    small parameter count or coarse grids.
+  
+  Error metric (fixed):
+  
+    – **REQMN = Mean-Absolute-Normalised RMSE**  
+      REQMN = √⟨(σᵉˣᵖ − σᵐᵒᵈ)²⟩ / ⟨|σᵉˣᵖ|⟩  
+      where ⟨•⟩ denotes the average over all data points for a mode.  
+      Using the average absolute experimental stress in the denominator
+      normalises each deformation mode, allowing simultaneous calibration
+      without any one mode dominating due to larger stress magnitudes.
+      
+  Required UI inputs:
+    – lower / upper bound for each parameter  
+    – step size (Δ) for each parameter

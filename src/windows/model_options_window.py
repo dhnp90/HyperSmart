@@ -1,13 +1,18 @@
 import tkinter as tk
 from tkinter import ttk
+import os
+import yaml
 from helpers.image_display import ImageDisplay
 import helpers.geometry_manager as gm
 from helpers.path_helpers import resolve_path
 
 class OptionsOfModels:
-    def __init__(self, root, material):
+    def __init__(self, root, material, proceed_callback_info, proceed_callback_back, proceed_callback_next):
         self.root = root
         self.material = material
+        self.proceed_callback_info = proceed_callback_info
+        self.proceed_callback_back = proceed_callback_back
+        self.proceed_callback_next = proceed_callback_next
         self.root.title("Options of Hyperelastic Model")
 
         # Restore previous geometry if available
@@ -46,57 +51,76 @@ class OptionsOfModels:
         canvas.pack(side="left", fill="both", expand=True)
         scrollbar.pack(side="right", fill="y")
 
-        # Variable to store the selected model
-        self.selected_model = tk.StringVar(value="")  
+        # Variable to store the selected model name
+        self.selected_model = tk.StringVar(value="")
 
-        # Add section titles and options
+        # Dictionary to store the full content of each model YAML
+        self.model_data_dict = {}
+
+        # Dynamically add model options
         self.add_model_options(scrollable_frame)
 
-        # Next Button
+        # Buttons
         next_button = tk.Button(self.root, text="Next", command=self.next_step)
         next_button.place(x=450, y=665)
 
-    def add_model_options(self, parent):
-        """Creates a structured list of hyperelastic models with selectable options."""
-        
-        sections = {
-            "Hookean-type": [
-                "Generalized Hyperbolic Sine family of strain measures",
-                "Seth-Hill family of strain measures",
-                "Curnier-Rakotomanana (Darijani-Naghdabadi) family of strain measures",
-                "Curnier-Zysset family of metric strain measures",
-                "Beex family of strain measures"
-            ],
-            "Series function based on invariants": [
-                "Neo-Hookean",
-                "Mooney-Rivlin",
-                "Yeoh",
-                "Hartmann-Neff"
-            ],
-            "Power law, exponential or logarithmic functions based on invariants": [
-                "Yamashita-Kawabata",
-                "Hartmann-Neff",
-                "Hoss-Marczak",
-                "Khajehsaeid",
-                "Arruda-Boyce",
-                "Yeoh-Fleming",
-                "Gent"
-            ],
-            "Models based on stretch ratio": [
-                "Ogden",
-                "Valanis-Landel"
-            ]
-        }
+        back_button = tk.Button(self.root, text="Back", command=lambda: self.proceed_callback_back(self.material))
+        back_button.place(x=335, y=665)
 
-        for category, models in sections.items():
+        model_info_btn = tk.Button(self.root, text="Model Info", command=self.info_request)
+        model_info_btn.place(x=375, y=665)
+
+    def add_model_options(self, parent):
+        """Reads .yaml files and adds model options grouped by model_class."""
+        model_dir = resolve_path("hyperelastic_models")
+        grouped_models = {}
+
+        if os.path.isdir(model_dir):
+            for filename in os.listdir(model_dir):
+                if filename.endswith((".yaml", ".yml")):
+                    file_path = os.path.join(model_dir, filename)
+                    try:
+                        with open(file_path, "r", encoding="utf-8") as file:
+                            data = yaml.safe_load(file)
+                            model_name = data.get("model_name")
+                            model_class = data.get("model_class")
+
+                            if model_name and model_class:
+                                grouped_models.setdefault(model_class, []).append(model_name)
+                                self.model_data_dict[model_name] = data
+                    except Exception as e:
+                        print(f"Failed to read {filename}: {e}")
+
+        for category, models in grouped_models.items():
             tk.Label(parent, text=category, font=("Arial", 10, "bold"), bg='white', anchor="w").pack(fill="x", pady=(10, 5))
-            for model in models:
-                ttk.Radiobutton(parent, text=model, variable=self.selected_model, value=model, style="Custom.TRadiobutton").pack(anchor="w", padx=20, pady=2)
+            for model in sorted(models):
+                ttk.Radiobutton(
+                    parent, text=model,
+                    variable=self.selected_model,
+                    value=model,
+                    style="Custom.TRadiobutton"
+                ).pack(anchor="w", padx=20, pady=2)
 
     def next_step(self):
         """Function to handle when the Next button is clicked."""
         selected = self.selected_model.get()
         if selected:
-            print(f"Selected model: {selected}")  # You can replace this with the actual next step
+            model_data = self.model_data_dict.get(selected)
+            if model_data:
+                self.proceed_callback_next(self.material, model_data)
+            else:
+                print(f"Model data not found for: {selected}")
         else:
             print("No model selected. Please choose one.")
+
+    def info_request(self):
+        """Function to handle when the Model Info button is clicked."""
+        selected = self.selected_model.get()
+        if selected:
+            model_data = self.model_data_dict.get(selected)
+            if model_data:
+                self.proceed_callback_info(self.material, model_data)
+            else:
+                print(f"Model data not found for: {selected}")
+        else:
+            print("No model selected.")

@@ -121,15 +121,15 @@ class DataInputVisualisation:
             canvas.get_tk_widget().place(x=480, y=410, width=350, height=250)
 
         # Add "Confirm" button
-        confirm_button = tk.Button(self.root, text="Confirm Data Input!", command=lambda: self.proceed(material, input_status))
+        confirm_button = tk.Button(self.root, text="Confirm Data Input!", command=lambda: self.proceed(material))
         confirm_button.place(x=770, y=665)
 
         # Add "Correct/Add Data Input"
         go_back_button = tk.Button(self.root, text="Correct/Add Data", command=lambda: self.go_back(material, input_status))
         go_back_button.place(x=660, y=665)
 
-    def proceed(self, material, input_status):
-        self.proceed_callback(material, input_status)
+    def proceed(self, material):
+        self.proceed_callback(material)
 
     def go_back(self, material, input_status):
         self.go_back(material, input_status)

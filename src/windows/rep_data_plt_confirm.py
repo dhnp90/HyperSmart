@@ -121,13 +121,13 @@ class RepDataPlotConfirmWindow:
             canvas.get_tk_widget().place(x=480, y=410, width=350, height=250)
 
         # Add "Done" button
-        done_button = tk.Button(self.root, text="Done!", command=lambda: self.proceed(material, input_status))
+        done_button = tk.Button(self.root, text="Done!", command=lambda: self.proceed(material))
         done_button.place(x=850, y=665)
 
         # Add "Back" button
         back_button = tk.Button(self.root, text="Back", command=self.proceed_callback_back)
         back_button.place(x=810, y=665)
 
-    def proceed(self, material, input_status):
+    def proceed(self, material):
         # Call the proceed callback to open the next window
-        self.proceed_callback_next(material, input_status)
+        self.proceed_callback_next(material)

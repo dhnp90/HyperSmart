@@ -50,6 +50,7 @@ Material Parameters Calibration:
 import tkinter as tk
 from PIL import Image, ImageTk
 import os
+import importlib
 
 # Import classes that define/control the App Windows
 from windows.experimental_data_input import ExperimentalDataWindow
@@ -64,7 +65,9 @@ from windows.exp_data_info import ChosenExpDataInfo
 from windows.access_data_window import AccessExpDataWindow
 from windows.rep_data_plt_window import RepDataPlotWindow
 from windows.rep_data_plt_confirm import RepDataPlotConfirmWindow
-
+from windows.hyper_model_info import ModelInfoWindow
+from windows.numerical_methods_options import NumericalMethodOptions
+from windows.BUSforModels import BUSforModels
 # Import Auxiliary Classes
 from helpers.image_display import ImageDisplay
 from helpers.data_center import ExperimentalData
@@ -214,14 +217,14 @@ class HyperSmartApp:
 
     # ---------------------------------- First Window of the Hyperelastic Model Selection Core: Options --------------------------------------
 
-    def open_model_first_window(self, material, input_status):
+    def open_model_first_window(self, material):
         # Store the applied geometry for reuse
         self.root.update_idletasks()
         gm.set_last_geometry(self.root.geometry())
         # Destroy previous Window
         self.clear_window()
-        ModelingChoice(self.root, material, self.open_model_options_window, self.exp_data_options, input_status)
-
+        ModelingChoice(self.root, material, self.open_model_options_window, self.exp_data_options, self.open_automatize_hm)
+     
     # -------------------------------------------------- Library of Hyperelastic Models ------------------------------------------------------
     
     def open_model_options_window(self, material):
@@ -230,9 +233,58 @@ class HyperSmartApp:
         gm.set_last_geometry(self.root.geometry())
         # Destroy previous Window
         self.clear_window()
-        OptionsOfModels(self.root, material)
-    
-    
+        OptionsOfModels(self.root, material, self.open_model_info, self.open_model_first_window, self.numerical_method_options)
+
+    def open_model_info(self, material, model_data):
+        # Store the applied geometry for reuse
+        self.root.update_idletasks()
+        gm.set_last_geometry(self.root.geometry())
+        # Destroy previous Window
+        self.clear_window()
+        ModelInfoWindow(self.root, material,model_data, self.open_model_options_window)
+
+    # ----------------------------------------------- Automatize Hyperelastic Model Choice ---------------------------------------------------
+    def open_automatize_hm(self, material):
+        # Store the applied geometry for reuse
+        self.root.update_idletasks()
+        gm.set_last_geometry(self.root.geometry())
+        # Destroy previous Window
+        self.clear_window()
+        BUSforModels(self.root, material, self.open_main_window)
+
+    # ----------------------------------------------------------------------------------------------------------------------------------------
+    # --------------------------------------------------------- Numerical Method Core --------------------------------------------------------
+    # ----------------------------------------------------------------------------------------------------------------------------------------  
+
+    def numerical_method_options(self, material, model_data):
+        # Store the applied geometry for reuse
+        self.root.update_idletasks()
+        gm.set_last_geometry(self.root.geometry())
+        # Destroy previous Window
+        self.clear_window()
+        NumericalMethodOptions(self.root, material, model_data, self.open_model_options_window, self.open_numerical_method_window)
+
+    def open_numerical_method_window(self, material, model_data, stem):
+        # Store the applied geometry for reuse
+        self.root.update_idletasks()
+        gm.set_last_geometry(self.root.geometry())
+        # Destroy previous Window
+        self.clear_window() 
+
+        try:
+            module = importlib.import_module(f"numerical_methods.{stem}")
+            MethodWindow = getattr(module, "MethodWindow")
+        except (ModuleNotFoundError, AttributeError) as err:
+            tk.messagebox.showerror("Import error",
+                                    f"Could not load method '{stem}':\n{err}")
+            return
+
+        module = importlib.import_module(f"numerical_methods.{stem}")  # "numerical_methods.enumeration"
+        MethodWindow = getattr(module, "MethodWindow")
+        MethodWindow(self.root, material, model_data, self.open_main_window)
+
+
+
 
     def clear_window(self):
         for widget in self.root.winfo_children():

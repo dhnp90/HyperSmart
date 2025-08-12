@@ -1,0 +1,171 @@
+model_name: "GHS-Seth-Hill Strain Measures"
+model_class: "Hookean-type"
+# Options:
+# "Hookean-type"
+# "Series function based on invariants"
+# "Power law, exponential or logarithmic functions based on invariants"
+# "Models based on stretch ratio"
+description: >
+  The Generalized Hyperbolic Sine with Seth-Hill as argument is a family 
+  of strain measures capable of generating Hookean-type hyperelastic 
+  models that accurately describe elastomers, soft biological tissues, 
+  and biomaterials.
+references: 
+  first: >
+    PEIXOTO, D. H. N. Estudo sobre diferentes medidas de deformação e 
+    apresentação da família seno-hiperbólica generalizada, com aplicação 
+    na modelagem de polímeros, biomateriais e tecidos biológicos moles. 
+    Belo Horizonte - MG: Universidade Federal de Minas Gerais, 14 jun. 2024.
+  second: >
+    PEIXOTO, Daniel Henrique Nunes; GRECO, Marcelo; VASCONCELLOS, Daniel 
+    Boy. A new family of strain tensors based on the hyperbolic sine function.
+    Latin American Journal of Solids and Structures, v. 21, p. e529, 1 mar. 
+    2024.
+strain_measure: >
+  ε^{SHG} = \begin{cases} 
+  n^{-1} \sinh\left(\frac{n}{m} \left(U^{m} - 1\right)\right) & \text{if } m \ne 0 \\
+  n^{-1} \sinh\left(n \ln(U)\right) & \text{if } m = 0 
+  \end{cases}
+# Options: 
+# Strain Energy Function for Invariant or Stretch Based
+# Strain Measure for Hookean-type.
+number_of_parameters: 4
+material_constants:
+  - name: E
+    display_format: E
+    bounds: [0.001, inf]
+  - name: v
+    display_format: \nu
+    bounds: [-0.9999, 0.4999]
+  - name: m
+    display_format: m
+    bounds: [-inf, inf]
+  - name: n
+    display_format: n
+    bounds: [-inf, inf]
+info_constraints: ""
+global_definitions:
+  L1: "(E * v) / ((1 + v) * (1 - 2 * v))"
+  L2: "E / (2 * (1 + v))"
+deformation_modes:
+  uniaxial:
+    expression_nominal:
+      - condition: "m != 0"
+        formula: |
+          (((3 * L1 * L2 + 2 * L2**2) / (L1 + L2)) *
+          lamb**(m - 1) / n) *
+          sinh((n / m) * (lamb**m - 1)) *
+          cosh((n / m) * (lamb**m - 1))
+      - condition: "m == 0"
+        formula: |
+          (((3 * L1 * L2 + 2 * L2**2) / (L1 + L2)) *
+          lamb**(-1) / n) *
+          sinh(n * log(lamb)) *
+          cosh(n * log(lamb))
+    expression_cauchy:
+      - condition: "m != 0"
+        formula: |
+          (((3 * L1 * L2 + 2 * L2**2) / (L1 + L2)) *
+          lamb**(m - 1) / n) *
+          cosh((n / m) * (lamb**m - 1)) *
+          sinh((n / m) * (lamb**m - 1)) *
+          ((m / n * asinh(-v * sinh((n / m) * (lamb**m - 1))) + 1)**(-2 / m))
+      - condition: "m == 0"
+        formula: |
+          ((3 * L1 * L2 + 2 * L2**2) / (L1 + L2) /
+          (n * lamb)) *
+          sinh(n * log(lamb)) *
+          cosh(n * log(lamb)) *
+          exp((-2 / n) * asinh(-v * sinh(n * log(lamb))))
+  biaxial:
+    expression_nominal:
+      - condition: "m != 0"
+        formula: |
+          (((6 * L1 * L2 + 4 * L2**2) / (L1 + 2 * L2)) *
+          lamb**(m - 1) / n) *
+          sinh((n / m) * (lamb**m - 1)) *
+          cosh((n / m) * (lamb**m - 1))
+      - condition: "m == 0"
+        formula: |
+          (((6 * L1 * L2 + 4 * L2**2) / (L1 + 2 * L2)) *
+          lamb**(-1) / n) *
+          sinh(n * log(lamb)) *
+          cosh(n * log(lamb))
+    expression_cauchy:
+      - condition: "m != 0"
+        formula: |
+          (((6 * L1 * L2 + 4 * L2**2) / (L1 + 2 * L2)) *
+          lamb**(m - 2) / n) *
+          cosh((n / m) * (lamb**m - 1)) *
+          sinh((n / m) * (lamb**m - 1)) *
+          ((m / n * asinh((2 * v / (v - 1)) *
+          sinh((n / m) * (lamb**m - 1))) + 1)**(-1 / m))
+      - condition: "m == 0"
+        formula: |
+          ((6 * L1 * L2 + 4 * L2**2) / (L1 + 2 * L2) /
+          (n * lamb**2)) *
+          sinh(n * log(lamb)) *
+          cosh(n * log(lamb)) *
+          exp((-1 / n) *
+          asinh((2 * v / (v - 1)) * sinh(n * log(lamb))))
+  pure_shear:
+    expression_nominal:
+      - condition: "m != 0"
+        formula: |
+          (((4 * L1 * L2 + 4 * L2**2) / (L1 + 2 * L2)) *
+          lamb**(m - 1) / n) *
+          sinh((n / m) * (lamb**m - 1)) *
+          cosh((n / m) * (lamb**m - 1))
+      - condition: "m == 0"
+        formula: |
+          (((4 * L1 * L2 + 4 * L2**2) / (L1 + 2 * L2)) *
+          lamb**(-1) / n) *
+          sinh(n * log(lamb)) *
+          cosh(n * log(lamb))
+    expression_cauchy:
+      - condition: "m != 0"
+        formula: |
+          (((4 * L1 * L2 + 4 * L2**2) / (L1 + 2 * L2)) *
+          lamb**(m - 1) / n) *
+          sinh((n / m) * (lamb**m - 1)) *
+          cosh((n / m) * (lamb**m - 1)) *
+          ((m / n * asinh((v / (v - 1)) *
+          sinh((n / m) * (lamb**m - 1))) + 1)**(-1 / m))
+      - condition: "m == 0"
+        formula: |
+          ((4 * L1 * L2 + 4 * L2**2) / (L1 + 2 * L2) /
+          (n * lamb)) *
+          sinh(n * log(lamb)) *
+          cosh(n * log(lamb)) *
+          exp((-1 / n) *
+          asinh((v / (v - 1)) * sinh(n * log(lamb))))
+simple_shear:
+    local_definitions:
+      beta: "atan(gamma / 2)"
+      lamb1: "(1 + sin(beta)) / cos(beta)"
+      lamb2: "(1 - sin(beta)) / cos(beta)"
+    expression_nominal:
+      - condition: "m != 0"
+        formula: |
+          (lamb1**(m - 2) / (2 * n)) *
+          cosh((n / m) * (lamb1**m - 1)) *
+          (cos(beta) + gamma * (1 + sin(beta))) *
+          (2 * L2 * sinh((n / m) * (lamb1**m - 1)) +
+          L1 * (sinh((n / m) * (lamb1**m - 1)) +
+          sinh((n / m) * (lamb2**m - 1)))) +
+          (lamb2**(m - 2) / (2 * n)) *
+          cosh((n / m) * (lamb2**m - 1)) *
+          (cos(beta) + gamma * (sin(beta) - 1)) *
+          (2 * L2 * sinh((n / m) * (lamb2**m - 1)) +
+          L1 * (sinh((n / m) * (lamb1**m - 1)) +
+          sinh((n / m) * (lamb2**m - 1))))
+      - condition: "m == 0"
+        formula: |
+          (cosh(n * log(lamb1)) / (2 * n * lamb1**2)) *
+          (cos(beta) + gamma * (1 + sin(beta))) *
+          (2 * L2 * sinh(n * log(lamb1)) +
+          L1 * (sinh(n * log(lamb1)) + sinh(n * log(lamb2)))) +
+          (cosh(n * log(lamb2)) / (2 * n * lamb2**2)) *
+          (cos(beta) + gamma * (sin(beta) - 1)) *
+          (2 * L2 * sinh(n * log(lamb2)) +
+          L1 * (sinh(n * log(lamb1)) + sinh(n * log(lamb2))))

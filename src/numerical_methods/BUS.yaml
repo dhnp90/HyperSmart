@@ -1,0 +1,39 @@
+# numerical_methods/BUS.yaml
+method_name: "BUS (Bayesian Updating with Structural Reliability Methods)"
+
+description: |
+  BUS combines Bayesian inference with structural-reliability sampling
+  (Subset Simulation) to calibrate material parameters and quantify
+  their uncertainty.  It constructs an artificial “failure event” in an
+  augmented probability space, then successively samples conditional
+  levels until the posterior distribution of the parameters is reached.
+  
+  • Produces a full posterior PDF for every parameter, not just a
+    single best-fit value.  
+  • Naturally provides credibility intervals and correlation
+    information between parameters.  
+  • More efficient than plain MCMC for high-dimensional or multi-modal
+    posteriors because Subset Simulation explores low-probability
+    regions in stages.  
+  • Requires a forward model call at every sample, so computational
+    cost still scales with the number of samples.
+    
+  Key algorithm steps:
+    1. Choose priors for each parameter.  
+    2. Define a likelihood based on the experimental–model discrepancy
+       (e.g. Gaussian with standard deviation σ).  
+    3. Embed the likelihood in a “limit-state” function  
+         g(θ, u) = u − L(θ)  
+       where u is a uniform random variable.  
+    4. Use Subset Simulation to drive g ≤ 0 until the target conditional
+       level equals the posterior.  
+    5. Collect all surviving θ-samples as draws from the posterior.
+    
+  Fixed error metric:
+    – Bayesian likelihood (usually Gaussian) with user-specified σ.
+    
+  Required UI inputs:
+    – prior type and bounds for each parameter  
+    – assumed σ (experimental noise)  
+    – number of samples per BUS level  
+    – target conditional probability per level (e.g. p₀ = 0.1)
