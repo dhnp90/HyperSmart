@@ -1,7 +1,7 @@
 1	HyperSmart
 
 HyperSmart is a scientific software tool designed for the automated or semi-automated selection of hyperelastic models and calibration of their material parameters based on experimental data.
-It also centralizes experimental datasets from various scientific publications into a single, well-structured repository, facilitating comparison and reuse by researchers.
+It also centralizes experimental datasets from various scientific publications into a single, well-structured repository, facilitating comparison, reuse and expansion by researchers.
 
 
 2	📖 About HyperSmart Software
@@ -26,7 +26,7 @@ HyperSmart is structured around three core components:
 - Includes metadata such as material class, subclass, source, and citations.
 - Supports visualization of data and export for external analysis.
 3.	Hyperelastic Model Library
-- Organizes isotropic, incompressible hyperelastic models into categories: Phenomenological and Micromechanical models.
+- Organizes isotropic, incompressible hyperelastic models into categories: invariant-based, stretch-based and Hookean-type.
 - Stores model definitions, equations, parameters, and reference sources in YAML.
 - Enables equation display and parameter selection in the GUI.
 4.	Numerical Methods
