@@ -253,7 +253,7 @@ class MethodWindow:  # noqa: E306  (re-declared, hides earlier import)
 
         # ------------- buttons ----------------------------------------
         tk.Button(self.root, text="Run BUS", command=self._run_bus)\
-          .place(x=350, y=665)
+          .place(x=385, y=665)
         tk.Button(self.root, text="Back", command=self._back)\
           .place(x=450, y=665)
 

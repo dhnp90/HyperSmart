@@ -1,0 +1,26 @@
+material_class: "Elastomers" # "Elastomers"; "Foams"; "Soft Biological Tissues" or "Gels & Hydrogels"
+material_subclass: "Synthetic Rubbers"
+material: "Chloroprene Rubber with Peroxide (CR+P)"
+publication_title: "Systematic Fitting and Comparison of Hyperelastic Continuum Models for Elastomers"
+author: "Ricker and Wriggers"
+year: 2023
+description: "Axial Tension of Chloroprene Rubber with Peroxide"
+stress_measure: "Nominal"
+deformation_modes:
+  axial: true
+  biaxial: false
+  simple_shear: false
+  pure_shear: false
+unit_of_measure:
+  axial: "MPa"
+  biaxial: false
+  simple_shear: false
+  pure_shear: false
+data_source: 2  # 1 = Data Published Together With the Scientific Article, 2 = Image Extraction Tool
+citation: "Ricker, A., Wriggers, P. Systematic Fitting and Comparison of Hyperelastic Continuum Models for Elastomers. Arch Computat Methods Eng 30, 2257–2288 (2023)."
+doi: "10.1007/s11831-022-09865-x"
+note: "  "
+data:
+  axial:
+    stretch: [1.0, 1.039846517, 1.084120425, 1.118063754, 1.154958678, 1.197756789, 1.2405549, 1.292207792, 1.343860685, 1.386658796, 1.442739079, 1.487012987, 1.540141677, 1.591794569, 1.640495868, 1.696576151, 1.748229044, 1.80283353, 1.854486423, 1.907615112, 1.966646989, 2.022727273, 2.078807556, 2.134887839, 2.188016529, 2.235242031, 2.283943329, 2.338547816]
+    stress: [0.0, 0.071461717, 0.155916473, 0.207888631, 0.263109049, 0.324825986, 0.383294664, 0.441763341, 0.503480278, 0.547331787, 0.607424594, 0.646403712, 0.69675174, 0.743851508, 0.789327146, 0.838051044, 0.878654292, 0.92900232, 0.971229698, 1.016705336, 1.065429234, 1.110904872, 1.1612529, 1.206728538, 1.253828306, 1.292807425, 1.338283063, 1.38863109]
